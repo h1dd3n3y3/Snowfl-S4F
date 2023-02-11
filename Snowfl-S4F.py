@@ -21,7 +21,7 @@ def find_in_browser(keyword):
     keyboard.release('f')
     time.sleep(0.1)
 
-    if keyword != "next":
+    if keyword != "next": # Select the next "1080p" film
         keyboard.type(keyword)
         time.sleep(0.1)
         keyboard.press(Key.esc)
