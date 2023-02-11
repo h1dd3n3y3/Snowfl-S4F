@@ -158,7 +158,7 @@ while 1:
         if not keyword: # If no keyword input (pressed enter)
             continue
 
-    if not config["def_search_action"]: # If default search action not set in config file 
+    if not config["def_search_action"] or config["def_search_action"] == "0": # If default search action not set in config file or set to "0"
         os.system("cls")
         choice = movie_opt() # Show main menu
     else:
