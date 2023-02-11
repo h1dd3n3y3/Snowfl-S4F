@@ -5,7 +5,7 @@ If this **_PATENT_** works, then it provides:
 - 1080p torrent quality, find-in-page functionality
 - 90% Greek and 10% English subtitle content
 - No Custom DNS required
-- JSON file script variable pass
+- JSON file script variable pass  
 It depends on time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
 ## Requirements
 - ### Python first of all
