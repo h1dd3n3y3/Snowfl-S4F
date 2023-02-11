@@ -66,11 +66,11 @@ def movie_opt():
     print("Select search option for \""+ keyword +"\":\n\n1. Movie.\n2. Subtitles.\n3. Movie & Subtitles.\n0. Re-enter movie keywords.\n\nSpace. Check if torrent available.\nEsc. Exit.\n----------------------------------\nPress one of the above buttons:")
     return str(msvcrt.getch().decode("utf-8")) # Get pressed button
 
-def watchlist_part1():
+def watchlist_part1(url):
     i = 0;
 
     # Redownload and refresh IMDb watchlist
-    response = requests.get("https://www.imdb.com/list/ls505955226/export")
+    response = requests.get(url)
     open("./init_watchlist.csv", "wb").write(response.content)
 
     with open("./init_watchlist.csv", 'r') as f:
@@ -136,7 +136,7 @@ keyboard = Controller()
 config = read_config("config.json") # Collection of config options included in the config.json file
 
 if config["IMDb_wlist_exp_link"] != "" or str(config["IMDb_wlist_exp_link"]).endswith("/export"): # Check config file for watchlist export link
-    tot_mov = watchlist_part1() # Declare and save watchlist's total movie number
+    tot_mov = watchlist_part1(config["IMDb_wlist_exp_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
 while 1:
