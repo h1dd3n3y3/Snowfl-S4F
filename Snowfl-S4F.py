@@ -1,4 +1,4 @@
-import webbrowser, json, requests, time, msvcrt, csv, os, datetime, clipboard
+import webbrowser, json, requests, time, msvcrt, csv, os, datetime, clipboard, qbittorrent
 from pynput.keyboard import Key, Controller
 
 def chwin(delay):
@@ -21,17 +21,18 @@ def find_in_browser(keyword):
     keyboard.release('f')
     time.sleep(0.1)
 
-    if keyword != "next": # Select the next "1080p" film
-        keyboard.type(keyword)
-        time.sleep(0.1)
-        keyboard.press(Key.esc)
-        time.sleep(0.1)
-        keyboard.release(Key.esc)
-    else:
+    if keyword == "next": # Focus on the next "1080p" film
         keyboard.press(Key.enter)
         time.sleep(0.1)
         keyboard.release(Key.enter)
+        time.sleep(0.1)
+    else:
+        keyboard.type(keyword)
+        time.sleep(0.1)
     
+    keyboard.press(Key.esc)
+    time.sleep(0.1)
+    keyboard.release(Key.esc)
     time.sleep(0.1)
 
 def open_in_browser(url, delay):
