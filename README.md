@@ -7,7 +7,7 @@ If this **_PATENT_** works, then it provides:
 - No Custom DNS required
 - JSON file script variable pass  
 
-It depends on time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
+It depends on a time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
 ## Requirements
 - ### Python first of all
   - Keep `python` and `pip` version up-to-date.
