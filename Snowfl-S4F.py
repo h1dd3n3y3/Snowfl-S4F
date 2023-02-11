@@ -129,7 +129,6 @@ def watchlist_part2(i):
             return movieList[int(watchlistSelection) - 1]
 
 #? <======================= MAIN APP =======================>
-
 movieList = []
 ratingList = []
 day_monthList = []
