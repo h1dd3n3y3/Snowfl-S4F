@@ -6,6 +6,8 @@ Python application for torrent & subtitle movie browser, using keystroke injecti
 - No Custom DNS required
 - JSON file script variable pass
 ## Requirements
+- ### Python first of all
+  - Keep `python` and `pip` version up-to-date.
 - ### Python libraries
   - **EITHER** pip install the libraries:  
   
