@@ -2,7 +2,6 @@
 Python application for torrent & subtitle movie browser, using keystroke injection, currently targeted for **_WINDOWS 10+_** versions.  
 If this **_PATENT_** works, then it provides:  
 - Publicly available torrent browser
-- 1080p torrent quality, find-in-page functionality
 - 90% Greek and 10% English subtitle content
 - No Custom DNS required
 - Script variable pass from JSON file  
@@ -18,7 +17,7 @@ It depends on a time delay before executing every action, so the speeds are adju
     `clipboard` `qbittorrent` (currently unnecessary)  
   - **OR** run, in terminal:
     ```
-    pip -r install requirements.txt
+    pip install -r requirements.txt
     ```
     inside the cloned repository directory.  
 - ### IMDb Watchlist integration _(optional)_
