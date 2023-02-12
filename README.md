@@ -10,6 +10,7 @@ It depends on a time delay before executing every action, so the speeds are adju
 ## Requirements
 - ### Python first of all
   - Keep `python` and `pip` version up-to-date.
+  - Downlaod windows installer form [here](https://www.python.org/downloads/windows).
 - ### Python libraries
   - **EITHER** pip install the libraries:  
   
