@@ -59,8 +59,12 @@ def type_sortBySeed_go(keyword, delay):
     time.sleep(delay)
 
 def read_config(filename):
-    with open(filename, "r") as f:
-        config = json.load(f)
+    try:
+        with open(filename, "r") as f:
+            config = json.load(f)
+    except:
+        config = None
+
     return config
 
 def movie_opt():
@@ -135,33 +139,39 @@ day_monthList = []
 keyboard = Controller()
 config = read_config("config.json") # Collection of config options included in the config.json file
 
-if config["IMDb_wlist_exp_link"] != "" or str(config["IMDb_wlist_exp_link"]).endswith("/export"): # Check config file for watchlist export link
-    tot_mov = watchlist_part1(config["IMDb_wlist_exp_link"]) # Declare and save watchlist's total movie number
+if config != None:
+    if config["IMDb_wlist_exp_link"] != "" or str(config["IMDb_wlist_exp_link"]).endswith("/export"): # Check config file for watchlist export link
+        tot_mov = watchlist_part1(config["IMDb_wlist_exp_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
 while 1:
     os.system("cls")
 
-    if "tot_mov" in vars(): # Checks if "tot_mov" is declared/defined
-        keyword = "back"
+    if config != None:
+        if "tot_mov" in vars(): # Checks if "tot_mov" is declared/defined
+            keyword = "back"
 
-        while keyword == "back":
-            keyword = input("Enter movie keywords (or leave blank & press enter to show IMDb watchlist):\n")
-            
-            if not keyword: # Empty keyword (pressed enter)
-                os.system("cls")
-                keyword = watchlist_part2(tot_mov)
+            while keyword == "back":
+                keyword = input("Enter movie keywords (or leave blank & press enter to show IMDb watchlist):\n")
+                
+                if not keyword: # Empty keyword (pressed enter)
+                    os.system("cls")
+                    keyword = watchlist_part2(tot_mov)
     else:
         keyword = input("Enter movie keywords (empty keywords are not allowed):\n")
 
         if not keyword: # If no keyword input (pressed enter)
             continue
 
-    if not config["def_search_action"] or config["def_search_action"] == "0": # If default search action not set in config file or set to "0"
+    if config != None:
+        if not config["def_search_action"] or config["def_search_action"] == "0": # If default search action not set in config file or set to "0"
+            os.system("cls")
+            choice = movie_opt() # Show main menu
+        else:
+            choice = config["def_search_action"]
+    else:
         os.system("cls")
         choice = movie_opt() # Show main menu
-    else:
-        choice = config["def_search_action"]
 
     #! <======================= CHOICE LOOP =======================>
     while 1:
