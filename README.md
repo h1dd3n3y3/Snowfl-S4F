@@ -7,8 +7,6 @@ If this **_PATENT_** works, then it provides:
 - Script variable pass from JSON file  
 
 It depends on a time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
-## Releases
-Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).
 ## Manual Release (in case of source code modifications)
 ### Requirements
 - #### Python first of all
@@ -48,3 +46,6 @@ Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releas
 - Using config.json _(optional)_:  
   Make sure to have both the _.exe_ and the _.json_ files in the same folder.
 - Enjoy!
+## Releases
+Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).
+**REMEMBER:** Both the _.exe_ and the _.json_ files must be in the same folder.
