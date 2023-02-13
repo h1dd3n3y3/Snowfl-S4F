@@ -7,11 +7,14 @@ If this **_PATENT_** works, then it provides:
 - Script variable pass from JSON file  
 
 It depends on a time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
-## Requirements
-- ### Python first of all
+## Releases
+Head over to releases.
+## Manual Release (in case of source code modifications)
+### Requirements
+- #### Python first of all
   - Keep `python` and `pip` version up-to-date.
   - Downlaod windows installer form [here](https://www.python.org/downloads/windows).
-- ### Python libraries
+- #### Python libraries
   - **EITHER** pip install the libraries:  
   
     `pynput` `requests` `datetime`  
@@ -22,15 +25,15 @@ It depends on a time delay before executing every action, so the speeds are adju
     pip install -r requirements.txt
     ```
     inside the cloned repository directory.  
-- ### IMDb Watchlist integration _(optional)_
+- #### IMDb Watchlist integration _(optional)_
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file `IMDb_wlist_exp_link` value **_(Double quoted)_**.
-## Custom Configuration using config.json file _(optional)_
+### Custom Configuration using config.json file _(optional)_
 - Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
 - Edit `config.json` file's `def_search_action` value with the desired option **_(Double quoted)_**.
 - The `config.json` file is not required for script execution, making it standalone.
-## Windows installation
+### Windows installation
 - Assuming python3 latest version & required libraries are installed.
 - In a terminal type:
   ```
