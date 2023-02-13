@@ -9,6 +9,7 @@ If this **_PATENT_** works, then it provides:
 It depends on a time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
 ## Ready Release
 Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
+
 **REMEMBER:** 
 - Both _.exe_ and _.json_ files must be in the same folder.
 - Follow the [steps below](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) to include your watchlist link.
