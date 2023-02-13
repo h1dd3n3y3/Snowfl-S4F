@@ -47,5 +47,5 @@ It depends on a time delay before executing every action, so the speeds are adju
   Make sure to have both the _.exe_ and the _.json_ files in the same folder.
 - Enjoy!
 ## Releases
-Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).
+Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 **REMEMBER:** Both the _.exe_ and the _.json_ files must be in the same folder.
