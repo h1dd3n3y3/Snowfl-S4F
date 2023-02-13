@@ -157,6 +157,11 @@ while 1:
                 if not keyword: # Empty keyword (pressed enter)
                     os.system("cls")
                     keyword = watchlist_part2(tot_mov)
+        else:
+            keyword = input("Enter movie keywords (empty keywords are not allowed):\n")
+
+            if not keyword: # If no keyword input (pressed enter)
+                continue
     else:
         keyword = input("Enter movie keywords (empty keywords are not allowed):\n")
 
@@ -180,11 +185,11 @@ while 1:
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            exit(0)
+            raise SystemExit(0)
         elif choice == "2": # Subtitles Search (2 button pressed)
             open_in_browser("https://www.subs4free.club/search_report.php?search=" + keyword + "&searchType=1", 0)
 
-            exit(0)
+            raise SystemExit(0)
         elif choice == "3": # Movie & Subtitles Search (3 button pressed)
             open_in_browser("https://www.subs4free.club/search_report.php?search=" + keyword + "&searchType=1", 2)
             open_in_browser("https://snowfl.com", 2)
@@ -195,7 +200,7 @@ while 1:
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            exit(0)
+            raise SystemExit(0)
         elif choice == "0": # Go back to keyword input (0 button pressed)
             os.system("cls")
             break
@@ -213,7 +218,7 @@ while 1:
 
             choice = movie_opt() # Show main menu
         elif choice.encode(encoding = 'UTF-8') == b'\x1b': # Exit (escape key pressed)
-            exit(0)
+            raise SystemExit(0)
         else:
             os.system("cls")
             print("+--------------------------+\n|!! Wrong button pressed !!|\n|---> Please try again <---|\n+--------------------------+\n")
