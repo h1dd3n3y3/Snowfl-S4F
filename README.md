@@ -49,5 +49,5 @@ It depends on a time delay before executing every action, so the speeds are adju
 ## Releases
 Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 **REMEMBER:** 
-  - Both _.exe_ and _.json_ files must be in the same folder.
-  - Follow above steps to include your watchlist link.
+- Both _.exe_ and _.json_ files must be in the same folder.
+- Follow above steps to include your watchlist link.
