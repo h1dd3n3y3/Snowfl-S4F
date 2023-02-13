@@ -7,6 +7,11 @@ If this **_PATENT_** works, then it provides:
 - Script variable pass from JSON file  
 
 It depends on a time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
+## Ready Release
+Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
+**REMEMBER:** 
+- Both _.exe_ and _.json_ files must be in the same folder.
+- Follow the [steps below](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) to include your watchlist link.
 ## Manual Release (in case of source code modifications)
 ### Requirements
 - #### Python first of all
@@ -46,8 +51,3 @@ It depends on a time delay before executing every action, so the speeds are adju
 - Using config.json _(optional)_:  
   Make sure to have both _.exe_ and _.json_ files in the same folder.
 - Enjoy!
-## Releases
-Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
-**REMEMBER:** 
-- Both _.exe_ and _.json_ files must be in the same folder.
-- Follow above steps to include your watchlist link.
