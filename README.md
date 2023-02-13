@@ -3,6 +3,7 @@ Python application for torrent & subtitle movie browser, using keystroke injecti
 If this **_PATENT_** works, then it provides:  
 - Publicly available torrent browser
 - 90% Greek and 10% English subtitle content
+- Movie selection from IMDb watchlist
 - No Custom DNS required
 - Script variable pass from JSON file  
 
