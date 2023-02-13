@@ -12,7 +12,7 @@ It depends on a time delay before executing every action, so the speeds are adju
 Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 
 **REMEMBER:** 
-- Both _.exe_ and _.json_ files must be in the same folder.
+- Both _.exe_ and _.json_ files must be in the same folder _(if planning to use the config.json)_.
 - Follow the [steps below](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) to include your watchlist link.
 ## Manual Release (in case of source code modifications)
 ### Requirements
