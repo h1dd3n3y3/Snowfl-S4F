@@ -8,7 +8,7 @@ If this **_PATENT_** works, then it provides:
 
 It depends on a time delay before executing every action, so the speeds are adjusted for the mid-range **_WINDOWS 10+_** computer.
 ## Releases
-Head over to releases.
+Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).
 ## Manual Release (in case of source code modifications)
 ### Requirements
 - #### Python first of all
