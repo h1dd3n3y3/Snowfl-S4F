@@ -1,6 +1,6 @@
 # Snowfl-S4F
 Python application for torrent & subtitle movie browser, using keystroke injection, currently targeted for **_WINDOWS 10+_** versions.  
-If this **_PATENT_** works, then it provides:  
+If this **_BODGE_** works, then it provides:  
 - Publicly available torrent browser
 - 90% Greek and 10% English subtitle content
 - Movie selection from IMDb watchlist
