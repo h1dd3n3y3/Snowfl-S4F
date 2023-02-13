@@ -2,8 +2,9 @@
 Python application for torrent & subtitle movie browser, using keystroke injection, currently targeted for **_WINDOWS 10+_** versions.  
 If this **_BODGE_** works, then it provides:  
 - Publicly available torrent browser
+- Find-in-page 1080p torrents
 - 90% Greek and 10% English subtitle content
-- Movie selection from IMDb watchlist
+- Movie selection from IMDb watchlist option
 - No Custom DNS required
 - Script variable pass from JSON file  
 
