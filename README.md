@@ -44,8 +44,8 @@ It depends on a time delay before executing every action, so the speeds are adju
   - `.\Snowfl-S4F`: The python script itself.
   - `-y`: Consent to every prompt pyinstaller might ask.
 - Using config.json _(optional)_:  
-  Make sure to have both the _.exe_ and the _.json_ files in the same folder.
+  Make sure to have both _.exe_ and _.json_ files in the same folder.
 - Enjoy!
 ## Releases
 Grab the latest from [releases](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
-**REMEMBER:** Both the _.exe_ and the _.json_ files must be in the same folder.
+**REMEMBER:** Both _.exe_ and _.json_ files must be in the same folder.
