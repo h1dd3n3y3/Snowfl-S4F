@@ -1,8 +1,7 @@
 import os, winreg, webbrowser, datetime, time, msvcrt, keyboard, csv, json, requests, clipboard, qbittorrent
 
 def close_tab():
-    if config != None and config["close_tab_after_torrent_add"] == "true":
-        keyboard.press_and_release("ctrl+w")
+    keyboard.press_and_release("ctrl+w")
 
 def change_win(delay):
     keyboard.press_and_release("alt+tab")
@@ -42,7 +41,9 @@ def get_and_add_magnet_link(): # Save magnet link
         get_and_add_magnet_link()
     else:
         open_in_browser(link, 0.1)
-        close_tab()
+
+        if config != None and config["close_tab_after_torrent_add"] == "true":
+            close_tab()
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
