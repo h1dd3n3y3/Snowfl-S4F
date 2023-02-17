@@ -1,4 +1,6 @@
 {
     "IMDb_wlist_exp_link": "",
-    "def_search_action": ""
+    "def_search_action": "",
+    "add_torrent_auto": "",
+    "close_tab_after_torrent_add": ""
 }

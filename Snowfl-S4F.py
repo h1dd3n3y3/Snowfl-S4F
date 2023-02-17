@@ -1,7 +1,8 @@
 import os, winreg, webbrowser, datetime, time, msvcrt, keyboard, csv, json, requests, clipboard, qbittorrent
 
 def close_tab():
-    keyboard.press_and_release("ctrl+w")
+    if config != None and config["close_tab_after_torrent_add"] == "true":
+        keyboard.press_and_release("ctrl+w")
 
 def change_win(delay):
     keyboard.press_and_release("alt+tab")
@@ -205,7 +206,9 @@ while 1:
             open_in_browser("https://snowfl.com", 4)
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
-            get_and_add_magnet_link()
+
+            if config != None and config["add_torrent_auto"] == "true":
+                get_and_add_magnet_link()
 
             raise SystemExit(0)
         elif choice == "2": # Subtitles Search (2 button pressed)
@@ -221,7 +224,9 @@ while 1:
             
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
-            get_and_add_magnet_link()
+
+            if config != None and config["add_torrent_auto"] == "true":
+                get_and_add_magnet_link()
 
             raise SystemExit(0)
         elif choice == "0": # Go back to keyword input (0 button pressed)
