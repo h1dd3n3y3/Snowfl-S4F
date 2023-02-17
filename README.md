@@ -48,6 +48,7 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
 - Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
 - Edit `config.json` file's `def_search_action` value with the desired option **_(Double quoted)_**.
 - Auto torrent download with `true` value in `add_torrent_auto` option **_(Double quoted)_**.
+- Auto tab close after torrent addition by setting `true` the value of `close_tab_after_torrent_add` **_(Double quoted)_**.
 - The `config.json` file is _not required for script execution_, making it standalone.
 ### Windows Installation
 - Assuming python3 latest version & required libraries are installed.
