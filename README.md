@@ -3,7 +3,7 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 If this **_BODGE_** works, then it provides:  
 - Publicly available torrent browser
 - Find-in-page 1080p torrents
-- Automatic torrent downlaod (optionally)
+- Automatic torrent downlaod _**(Firefox & Chrome ONLY)**_ (optionally)
 - 90% Greek and 10% English subtitle content browser
 - Movie selection from IMDb watchlist (optionally)
 - No Custom DNS required (for now)
