@@ -1,61 +1,78 @@
-import webbrowser, json, requests, time, msvcrt, csv, os, datetime, clipboard, qbittorrent
-from pynput.keyboard import Key, Controller
+import os, winreg, webbrowser, datetime, time, msvcrt, keyboard, csv, json, requests, clipboard, qbittorrent
 
-def chwin(delay):
-    keyboard.press(Key.alt)
-    time.sleep(0.1)
-    keyboard.press(Key.tab)
-    time.sleep(0.1)
-    keyboard.release(Key.alt)
-    time.sleep(0.1)
-    keyboard.release(Key.tab)
+def close_tab():
+    keyboard.press_and_release("ctrl+w")
+
+def change_win(delay):
+    keyboard.press_and_release("alt+tab")
     time.sleep(delay)
 
 def find_in_browser(keyword):
-    keyboard.press(Key.ctrl)
-    time.sleep(0.1)
-    keyboard.press('f')
-    time.sleep(0.1)
-    keyboard.release(Key.ctrl)
-    time.sleep(0.1)
-    keyboard.release('f')
+    keyboard.press_and_release("ctrl+f")
     time.sleep(0.1)
 
     if keyword == "next": # Focus on the next "1080p" film
-        keyboard.press(Key.enter)
-        time.sleep(0.1)
-        keyboard.release(Key.enter)
+        keyboard.press_and_release("enter")
         time.sleep(0.1)
     else:
-        keyboard.type(keyword)
+        keyboard.write(keyword)
         time.sleep(0.1)
     
-    keyboard.press(Key.esc)
+    keyboard.press_and_release("esc")
     time.sleep(0.1)
-    keyboard.release(Key.esc)
+
+def get_and_add_magnet_link(): # Save magnet link
+    keyboard.press_and_release("tab")
     time.sleep(0.1)
+    copy_link_to_clip(0.1)
+    link = clipboard.paste()
+
+    if not link.startswith("magnet"):
+        if link.endswith("/#fetch"):
+            find_in_browser("next")
+            
+        get_and_add_magnet_link()
+    else:
+        open_in_browser(link, 0.1)
+        close_tab()
+
+def copy_link_to_clip(delay): # Save url link
+    keyboard.press_and_release("shift+f10")
+    time.sleep(0.1)
+
+    if browser == "chrome": # 'Shift + F10' shortcut and then 'E' key
+        keyboard.press_and_release("e")
+    elif browser == "firefox": # 'Shift + F10' shortcut and then 'L' key
+        keyboard.press_and_release("l")
+
+    time.sleep(delay)
+
+def get_default_browser(): # Get default browser from Windows Registry
+    try:
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice") as key:
+            prog_id, _ = winreg.QueryValueEx(key, "Progid")
+
+        with winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, fr"{prog_id}\shell\open\command") as key:
+            browser_path, _ = winreg.QueryValueEx(key, "")
+            default_browser = os.path.splitext(os.path.basename(browser_path))[0]
+
+        return default_browser
+    except WindowsError:
+        return "Unknown"
+
 
 def open_in_browser(url, delay):
     webbrowser.open(url)
     time.sleep(delay)
 
 def type_sortBySeed_go(keyword, delay):
-    keyboard.type(keyword)
-    time.sleep(0.1)
+    keyboard.write(keyword)
 
     for i in range(2):
-        keyboard.press(Key.tab)
-        time.sleep(0.1)
-        keyboard.release(Key.tab)
-        time.sleep(0.1)
+        keyboard.press_and_release("tab")
     
-    keyboard.press(Key.right)
-    time.sleep(0.1)
-    keyboard.release(Key.right)
-    time.sleep(0.1)
-    keyboard.press(Key.enter)
-    time.sleep(0.1)
-    keyboard.release(Key.enter)
+    keyboard.press_and_release("right")
+    keyboard.press_and_release("enter")
     time.sleep(delay)
 
 def read_config(filename):
@@ -78,11 +95,15 @@ def watchlist_part1(url):
     response = requests.get(url)
     open("./init_watchlist.csv", "wb").write(response.content)
 
-    with open("./init_watchlist.csv", 'r') as f:
-        with open("./watchlist.csv", 'w') as f1:
-            next(f) # skip header line
-            for line in f:
-                f1.write(line)
+    try:
+        with open("./init_watchlist.csv", 'r') as f:
+            with open("./watchlist.csv", 'w') as f1:
+                next(f) # skip header line
+
+                for line in f:
+                    f1.write(line)
+    except:
+        return "Unknown"
 
     os.remove("./init_watchlist.csv") # Delete old watchlist csv
     f = open("./watchlist.csv", "r+", encoding="utf-8") # Open the watchlist csv
@@ -136,7 +157,7 @@ def watchlist_part2(i):
 movieList = []
 ratingList = []
 day_monthList = []
-keyboard = Controller()
+browser = get_default_browser()
 config = read_config("config.json") # Collection of config options included in the config.json file
 
 if config != None: # If config file is present
@@ -184,6 +205,7 @@ while 1:
             open_in_browser("https://snowfl.com", 4)
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
+            get_and_add_magnet_link()
 
             raise SystemExit(0)
         elif choice == "2": # Subtitles Search (2 button pressed)
@@ -195,10 +217,11 @@ while 1:
             open_in_browser("https://snowfl.com", 2)
 
             for i in range(2):
-                chwin(0.1)
+                change_win(0.1)
             
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
+            get_and_add_magnet_link()
 
             raise SystemExit(0)
         elif choice == "0": # Go back to keyword input (0 button pressed)
@@ -210,7 +233,7 @@ while 1:
             open_in_browser("https://snowfl.com", 4)
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
-            chwin(0.1)
+            change_win(0.1)
             keyword = input("Movie keywords (Press enter to skip to search options):\n")
 
             if not keyword: # Empty new keyword (pressed enter)
