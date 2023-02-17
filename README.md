@@ -39,6 +39,8 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
     ```
     inside the cloned repository directory.  
     In both cases, you **<ins>might need an administrative shell.</ins>**
+- ### Your favourite torrent client.
+  - [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended
 - #### IMDb Watchlist integration _(optional)_
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
