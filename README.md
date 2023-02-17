@@ -17,6 +17,8 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
 - Both _.exe_ and _.json_ files must be in the same folder _(if planning to use the config.json)_.
 - How to [**_INCLUDE YOUR IMDb WATCHLIST_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional).
 - [**JSON Custom Configuration**](https://github.com/tru3w1tn3ss/Snowfl-S4F#custom-configuration-using-configjson-file-optional) instructions.
+- A torrent client is required:
+  - [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else will do.
 ## Manual Release (in case of source code modifications)
 ### Requirements
 - #### Python first of all
