@@ -45,8 +45,8 @@ Time delay before every action, adjusted for the average computer.
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file `IMDb_wlist_exp_link` value **_(Double quoted)_**.
 ## <ins>Custom Configuration using config.json file _(optional)_</ins>
-- ### Both _.exe_ and _.json_ files must be in the same folder _(if planning to use the config.json)_.
-- ### Every value must be **_Double quoted_** after each option name (JSON Logic):
+- ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
+- ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name (JSON Logic):
   - Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
   - Edit `config.json` file's `def_search_action` value with the desired option (1-3).
   - Auto torrent download with `true` value in `add_torrent_auto`.
