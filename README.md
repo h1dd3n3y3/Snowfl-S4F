@@ -14,7 +14,7 @@ If this **_BODGE_** works, then it provides:
 - JSON Custom Configuration  
 
 Time delay before every action, adjusted for the average computer.
-## Ready Release
+## <ins>Ready Release</ins>
 Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 
 **REMEMBER:** 
@@ -23,7 +23,7 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
 - [**JSON Custom Configuration**](https://github.com/tru3w1tn3ss/Snowfl-S4F#custom-configuration-using-configjson-file-optional) instructions.
 - A Bittorrent client is required:
   - [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else will do.
-## Manual Release (in case of source code modifications)
+## <ins>Manual Release (code modifications)</ins>
 ### Requirements
 - #### Python first of all
   - Keep `python` and `pip` version up-to-date.
@@ -49,7 +49,7 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file `IMDb_wlist_exp_link` value **_(Double quoted)_**.
-## Custom Configuration using config.json file _(optional)_
+## <ins>Custom Configuration using config.json file _(optional)_</ins>
 ### Every value must be **_Double quoted_** after each option name (JSON Logic):
 - Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
 - Edit `config.json` file's `def_search_action` value with the desired option (1-3).
@@ -57,7 +57,7 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
 - Auto tab close after torrent addition by setting `true` the value of `close_tab_after_torrent_add`.
 - Open Bittorrent client, just in case it won't launch automatically, with `true` value in `open_bittorrent_client_after`.
 - The `config.json` file is _not required for script execution_, making it standalone.
-## Windows Installation
+## <ins>Windows Installation</ins>
 - Assuming python3 latest version & required libraries are installed.
 - In a terminal type:
   ```
