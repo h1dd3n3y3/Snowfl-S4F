@@ -190,7 +190,7 @@ browser = get_default_browser()
 config = read_config("config.json") # Collection of config options included in the config.json file
 
 if config != None: # If config file is present
-    if config["IMDb_wlist_exp_link"] != "" or str(config["IMDb_wlist_exp_link"]).endswith("/export"): # Check config file for watchlist export link
+    if config["IMDb_wlist_exp_link"].endswith("/export"): # Check config file for watchlist export link
         tot_mov = watchlist_part1(config["IMDb_wlist_exp_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
