@@ -7,7 +7,7 @@ def change_win(delay):
     keyboard.press_and_release("alt+tab")
     time.sleep(delay)
 
-def check_internet_connection():
+def has_internet_conn():
     try:
         requests.get('http://www.google.com', timeout=5)
         return True
@@ -163,7 +163,7 @@ def watchlist_part2(i):
             return movieList[int(watchlistSelection) - 1]
 
 #? <======================= MAIN APP =======================>
-if check_internet_connection() == False:
+if not has_internet_conn():
     print("No internet connection . . .")
     os.system("pause")
     raise SystemExit(0)
