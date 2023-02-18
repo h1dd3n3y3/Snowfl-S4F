@@ -6,11 +6,11 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - A <ins>**Bittorrent client**</ins> is <ins>**required**</ins> _(duh...)_: [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else will do.
 
 ### If this <ins>_BODGE_</ins> works, then it provides:  
-- No DNS restrictions _(currently)_
 - Publicly available torrent browser
 - Find-in-page 1080p torrents
 - Automatic torrent downlaod _(optionally)_
 - 90% Greek and 10% English subtitle content browser
+- No DNS restrictions _(currently)_
 - Movie selection from [**_IMDb WATCHLIST_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) _(optionally)_
 - [**JSON Custom Configuration**](https://github.com/tru3w1tn3ss/Snowfl-S4F#custom-configuration-using-configjson-file-optional)  
 
