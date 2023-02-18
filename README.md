@@ -1,6 +1,6 @@
 # Snowfl-S4F
 Python application for torrent & subtitle movie browsing, using keystroke injection.  
-# <ins>**!! DISCLAIMER !!**</ins>
+## <ins>**!! DISCLAIMER !!**</ins>
 - **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions **_ONLY_**.
 - **_ONLY_** for <ins>**_Firefox_**</ins> or <ins>**_Chrome_**</ins> browsers **_(currently)_**.  
 - A <ins>**Bittorrent client**</ins> is <ins>**required**</ins> _(duh...)_: [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else is fine _(€$£)_.
