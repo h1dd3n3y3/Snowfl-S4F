@@ -2,5 +2,6 @@
     "IMDb_wlist_exp_link": "",
     "def_search_action": "",
     "add_torrent_auto": "",
-    "close_tab_after_torrent_add": ""
+    "close_tab_after_torrent_add": "",
+    "open_bittorrent_client_after": ""
 }

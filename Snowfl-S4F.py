@@ -29,6 +29,7 @@ def find_in_browser(keyword):
     time.sleep(0.1)
 
 def get_and_add_magnet_link(): # Save magnet link
+    torr_cli = get_default_torrent_client()
     keyboard.press_and_release("tab")
     time.sleep(0.1)
     copy_link_to_clip(0.1)
@@ -42,8 +43,11 @@ def get_and_add_magnet_link(): # Save magnet link
     else:
         open_in_browser(link, 0.1)
 
-        if config != None and config["close_tab_after_torrent_add"] == "true":
-            close_tab()
+        if config != None:
+            if config["close_tab_after_torrent_add"] == "true":
+                close_tab()
+            if config["open_bittorrent_client_after"] == "true":
+                os.system('cmd /c "' + torr_cli + '"')
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -69,6 +73,17 @@ def get_default_browser(): # Get default browser from Windows Registry
     except WindowsError:
         return "Unknown"
 
+def get_default_torrent_client():
+    try:
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\Magnet\shell\open\command") as key:
+            torrent_client = winreg.QueryValue(key, None)
+            start = torrent_client.find('"') + 1
+            end = torrent_client.find('"', start)
+            torrent_client_path = torrent_client[start:end]
+        
+        return torrent_client_path
+    except WindowsError:
+        return "Unknown"
 
 def open_in_browser(url, delay):
     webbrowser.open(url)
