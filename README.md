@@ -9,9 +9,9 @@ If this **_BODGE_** works, then it provides:
 - No Custom DNS required _(for now)_
 - Publicly available torrent browser
 - Find-in-page 1080p torrents
-- Automatic torrent downlaod (optionally)
+- Automatic torrent downlaod _(optionally)_
 - 90% Greek and 10% English subtitle content browser
-- Movie selection from [**_IMDb WATCHLIST_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) (optionally)
+- Movie selection from [**_IMDb WATCHLIST_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) _(optionally)_
 - [**JSON Custom Configuration**](https://github.com/tru3w1tn3ss/Snowfl-S4F#custom-configuration-using-configjson-file-optional)  
 
 Time delay before every action, adjusted for the average computer.
