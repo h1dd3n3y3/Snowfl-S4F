@@ -1,9 +1,13 @@
 # Snowfl-S4F
-Python application for torrent & subtitle movie browsing, using keystroke injection, targeted for **_WINDOWS 10+_** versions **_ONLY!_**  
+Python application for torrent & subtitle movie browsing, using keystroke injection.  
+# <ins>**!! DISCLAIMER !!**</ins>
+- **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions **_ONLY_**.
+- **_ONLY_** for <ins>**_Firefox_**</ins> or <ins>**_Chrome_**</ins> browsers **_(currently)_**.  
+
 If this **_BODGE_** works, then it provides:  
 - Publicly available torrent browser
 - Find-in-page 1080p torrents
-- Automatic torrent downlaod _**(Firefox & Chrome ONLY)**_ (optionally)
+- Automatic torrent downlaod (optionally)
 - 90% Greek and 10% English subtitle content browser
 - Movie selection from IMDb watchlist (optionally)
 - No Custom DNS required (for now)
