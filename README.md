@@ -6,7 +6,7 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - A <ins>**Bittorrent client**</ins> is <ins>**required**</ins> (of course): [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else will do.
 
 If this **_BODGE_** works, then it provides:  
-- No Custom DNS required _(for now)_
+- No Custom DNS required _(currently)_
 - Publicly available torrent browser
 - Find-in-page 1080p torrents
 - Automatic torrent downlaod _(optionally)_
