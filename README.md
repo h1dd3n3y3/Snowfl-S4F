@@ -2,7 +2,7 @@
 Python application for torrent & subtitle movie browsing, using keystroke injection.  
 ## <ins>**!! DISCLAIMER !!**</ins>
 - **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions **_ONLY_**.
-- **_ONLY_** for <ins>**_Firefox_**</ins> or <ins>**_Chrome_**</ins> browsers **_(currently)_**.  
+- **_ONLY_** for <ins>**supported**</ins> browsers.  
 - A <ins>**Bittorrent client**</ins> is <ins>**required**</ins> _(duh...)_: [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else is fine _(€$£)_.
 
 ### If this <ins>_BODGE_</ins> works, then it provides:  
@@ -13,6 +13,11 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - No DNS restrictions _(currently)_
 - [**_IMDb WATCHLIST_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/blob/master/README.md#imdb-watchlist-integration-optional) movie selection _(optionally)_
 - [**JSON Custom Configuration**](https://github.com/tru3w1tn3ss/Snowfl-S4F#custom-configuration-using-configjson-file-optional)  
+
+### Browser support:  
+- Chrome
+- Firefox
+- Opera
 
 Time delay before every action, adjusted for the average computer.
 ## <ins>Ready Release</ins>
