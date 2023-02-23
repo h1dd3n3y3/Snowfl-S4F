@@ -49,17 +49,6 @@ Time delay before every action, adjusted for the average computer.
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file `IMDb_wlist_exp_link` value **_(Double quoted)_**.
-<<<<<<< HEAD
-### Custom Configuration using config.json file _(optional)_
-#### - true/false values <ins>MUST NOT</ins> be double quoted
-
-- Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
-- Edit `config.json` file's `default_search_action` value with the desired option .
-- Auto torrent download with `true` value in `add_torrent_auto` option **_(Double quoted)_**.
-- Auto tab close after torrent addition by setting `true` the value of `close_tab_after_torrent_add` **_(Double quoted)_**.
-- The `config.json` file is _not required for script execution_, making it standalone.
-### Windows Installation
-=======
 ## <ins>Custom Configuration using config.json file _(optional)_</ins>
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
 - ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name (JSON Logic):
@@ -70,7 +59,6 @@ Time delay before every action, adjusted for the average computer.
   - Open Bittorrent client, just in case it won't launch automatically, with `true` value in `open_bittorrent_client_after`.
   - The `config.json` file is _not required for script execution_, making it standalone.
 ## <ins>Windows Installation</ins>
->>>>>>> b96eb12812866e3144876c7cc6801135d827bc15
 - Assuming python3 latest version & required libraries are installed.
 - In a terminal type:
   ```
