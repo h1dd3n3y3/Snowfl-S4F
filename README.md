@@ -70,5 +70,4 @@ Time delay before every action, adjusted for the average computer.
   - `--paths`: There's a chance it might be necessary to point pyinstaller to the python libraries folder.
   - `.\Snowfl-S4F`: The python script itself.
   - `-y`: Consent to every prompt pyinstaller might ask.
-- Both _.exe_ and _.json_ files must be in the same folder _(if planning to use the config.json)_.
 - **Enjoy!**
