@@ -59,13 +59,13 @@ Delay, before every action, adjusted for the average computer.
 ## <ins>IMDb Watchlist integration</ins> _(optional)_
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
-  - Paste the Watchlist link in the `config.json` file `IMDb_wlist_exp_link` value **_(Double quoted)_**.
+  - Paste the Watchlist link in the `config.json` file.
 ## <ins>Custom Configuration using config.json file</ins> _(optional)_
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
-- ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic):
-  - Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
-  - Edit `config.json` file's `def_search_action` value with the desired option (1-3).
-  - Auto torrent download with `true` value in `add_torrent_auto`.
-  - Auto tab close after torrent addition by setting `true` the value of `close_tab_after_torrent_add`.
-  - Open Bittorrent client, just in case it won't launch automatically, with `true` value in `open_bittorrent_client_after`.
-  - The `config.json` file is _not required for script execution_, making it standalone.
+- ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic).
+- ### JSON Mapping:
+  - IMDb Watchlist: `IMDb_watchlist_export_link` set with IMDb Watchlist export link **_(Double quoted)_**.
+  - Default search action, after movie title entry/selection: `default_search_action` between 1-3.
+  - Auto torrent selection: `auto_select` to `true/false` or leave empty.
+  - Auto close browser tab after torrent added: `close_tab_after_torrent_add` to `true/false` or leave empty.
+  - Open Bittorrent client, (just in case it won't launch automatically): `open_bittorrent_client_after` to `true/false` or leave empty.
