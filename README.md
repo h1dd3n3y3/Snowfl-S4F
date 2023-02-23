@@ -64,7 +64,7 @@ Delay, before every action, adjusted for the average computer.
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
 - ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic).
 - ### JSON Mapping:
-  - IMDb Watchlist: `IMDb_watchlist_export_link` set with IMDb Watchlist export link **_(Double quoted)_**.
+  - IMDb Watchlist: `IMDb_watchlist_export_link` to export link **_(ending with "/export" & double quoted)_**.
   - Default search action, after movie title entry/selection: `default_search_action` between `1-3`.
   - Auto torrent selection: `auto_select` to `true/false` or leave empty.
   - Auto close browser tab after torrent added: `close_tab_after_torrent_add` to `true/false` or leave empty.
