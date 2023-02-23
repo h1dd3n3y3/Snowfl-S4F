@@ -62,7 +62,8 @@ Time delay before every action, adjusted for the average computer.
 - Assuming python3 latest version & required libraries are installed.
 - In a terminal type:
   ```
-  pyinstaller --onefile --icon=.\icon\Movies.ico --paths=<DriveLetter>:\<PythonDir>\Lib\site-packages .\Snowfl-S4F.py -y
+  pyinstaller --onefile --icon=.\icon\Movies.ico --paths=<DriveLetter>:\<PythonDir>\Lib\site-packages 
+  .\Snowfl-S4F.py -y
   ```
   - `pyinstaller`: Python library used to convert _.py_ to _.exe_ files.
   - `--onefile`: Keep all script's libraries inside the exe.
