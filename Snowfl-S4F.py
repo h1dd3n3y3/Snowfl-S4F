@@ -1,4 +1,4 @@
-import os, winreg, webbrowser, datetime, time, msvcrt, keyboard, csv, json, requests, clipboard, qbittorrent
+import os, winreg, win32gui, win32con, webbrowser, datetime, time, msvcrt, keyboard, csv, json, requests, ping3, clipboard
 
 def close_tab():
     keyboard.press_and_release("ctrl+w")
@@ -7,11 +7,11 @@ def change_win(delay):
     keyboard.press_and_release("alt+tab")
     time.sleep(delay)
 
-def has_internet_conn():
+def ping_req(hostname):
     try:
-        requests.get('http://www.google.com', timeout=5)
+        ping3.ping(hostname, timeout=1)
         return True
-    except requests.ConnectionError:
+    except ping3.exceptions.PingError:
         return False
 
 def find_in_browser(keyword):
@@ -28,8 +28,7 @@ def find_in_browser(keyword):
     keyboard.press_and_release("esc")
     time.sleep(0.1)
 
-def get_and_add_magnet_link(): # Save magnet link
-    torr_cli = get_default_torrent_client()
+def get_add_magnet(): # Save magnet link
     keyboard.press_and_release("tab")
     time.sleep(0.1)
     copy_link_to_clip(0.1)
@@ -39,15 +38,15 @@ def get_and_add_magnet_link(): # Save magnet link
         if link.endswith("/#fetch"):
             find_in_browser("next")
             
-        get_and_add_magnet_link()
+        get_add_magnet()
     else:
         open_in_browser(link, 0.1)
 
         if config != None:
             if config["close_tab_after_torrent_add"] == "true":
-                close_tab()
+                close_tab() # Close browser tab
             if config["open_bittorrent_client_after"] == "true":
-                os.system('cmd /c "' + torr_cli + '"')
+                os.system('cmd /c "' + bittorr_cli + '"') # Launch bittorrent client
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -57,6 +56,11 @@ def copy_link_to_clip(delay): # Save url link
         keyboard.press_and_release("e")
     elif browser == "firefox": # 'Shift + F10' shortcut and then 'L' key
         keyboard.press_and_release("l")
+    elif browser == "Launcher": # Opera browser
+        for i in range(5):
+            keyboard.press_and_release("down")
+
+        keyboard.press_and_release("enter")
 
     time.sleep(delay)
 
@@ -73,17 +77,37 @@ def get_default_browser(): # Get default browser from Windows Registry
     except WindowsError:
         return "Unknown"
 
-def get_default_torrent_client():
+def get_default_bittorrent_client_path():
     try:
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\Magnet\shell\open\command") as key:
-            torrent_client = winreg.QueryValue(key, None)
-            start = torrent_client.find('"') + 1
-            end = torrent_client.find('"', start)
-            torrent_client_path = torrent_client[start:end]
+            bittorrent_client = winreg.QueryValue(key, None)
+            start = bittorrent_client.find('"') + 1
+            end = bittorrent_client.find('"', start)
+            bittorrent_client_path = bittorrent_client[start:end]
         
-        return torrent_client_path
+        return bittorrent_client_path
     except WindowsError:
         return "Unknown"
+
+def close_qbittorrent_on_finish(bittorrent_client_path):
+    name, ext = os.path.splitext(os.path.basename(bittorrent_client_path))
+
+    if name != "qbittorrent":
+        return
+
+    def find_torrent_window(hwnd, _):
+        window_title = win32gui.GetWindowText(hwnd)
+
+        if window_title.lower().startswith(name.lower()):
+            win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
+
+    win32gui.EnumWindows(find_torrent_window, None)
+
+def download_qbittorrent():
+    open_in_browser("https://www.fosshub.com/qBittorrent.html", 4)
+    find_in_browser("qBittorrent Windows x64")
+    keyboard.press_and_release("esc")
+    keyboard.press_and_release("enter")
 
 def open_in_browser(url, delay):
     webbrowser.open(url)
@@ -178,10 +202,16 @@ def watchlist_part2(i):
             return movieList[int(watchlistSelection) - 1]
 
 #? <======================= MAIN APP =======================>
-if not has_internet_conn():
+while not ping_req("google.com"): # Check internet connection
     print("No internet connection . . .")
     os.system("pause")
-    raise SystemExit(0)
+
+if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
+    print("No Bittorrent client installed . . .\nDownload qBittorrent (recommended) and continue?(y/n)")
+    if msvcrt.getch().decode("utf-8") == 'y':
+        download_qbittorrent()
+    else:
+        raise SystemExit(0)
 
 movieList = []
 ratingList = []
@@ -190,8 +220,8 @@ browser = get_default_browser()
 config = read_config("config.json") # Collection of config options included in the config.json file
 
 if config != None: # If config file is present
-    if config["IMDb_wlist_exp_link"].endswith("/export"): # Check config file for watchlist export link
-        tot_mov = watchlist_part1(config["IMDb_wlist_exp_link"]) # Declare and save watchlist's total movie number
+    if config["IMDb_watchlist_export_link"].endswith("/export"): # Check config file for watchlist export link
+        tot_mov = watchlist_part1(config["IMDb_watchlist_export_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
 while 1:
@@ -219,31 +249,31 @@ while 1:
             continue
 
     if config != None: # If config file is present
-        if not config["def_search_action"] or config["def_search_action"] == "0": # If default search action not set in config file or set to "0"
+        if not config["default_search_action"] or config["default_search_action"] == "0": # If default search action not set in config file or set to "0"
             os.system("cls")
             choice = movie_opt() # Show main menu
         else:
-            choice = config["def_search_action"]
+            choice = config["default_search_action"]
     else: # If config file is not present
         os.system("cls")
         choice = movie_opt() # Show main menu
 
     #! <======================= CHOICE LOOP =======================>
     while 1:
-        if choice == "1": # Movie Search (1 button pressed)
+        if choice == '1': # Movie Search (1 button pressed)
             open_in_browser("https://snowfl.com", 4)
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
             if config != None and config["add_torrent_auto"] == "true":
-                get_and_add_magnet_link()
+                get_add_magnet()
 
             raise SystemExit(0)
-        elif choice == "2": # Subtitles Search (2 button pressed)
+        elif choice == '2': # Subtitles Search (2 button pressed)
             open_in_browser("https://www.subs4free.club/search_report.php?search=" + keyword + "&searchType=1", 0)
 
             raise SystemExit(0)
-        elif choice == "3": # Movie & Subtitles Search (3 button pressed)
+        elif choice == '3': # Movie & Subtitles Search (3 button pressed)
             open_in_browser("https://www.subs4free.club/search_report.php?search=" + keyword + "&searchType=1", 2)
             open_in_browser("https://snowfl.com", 2)
 
@@ -254,13 +284,13 @@ while 1:
             find_in_browser("1080p")
 
             if config != None and config["add_torrent_auto"] == "true":
-                get_and_add_magnet_link()
+                get_add_magnet()
 
             raise SystemExit(0)
-        elif choice == "0": # Go back to keyword input (0 button pressed)
+        elif choice == '0': # Go back to keyword input (0 button pressed)
             os.system("cls")
             break
-        elif choice == " ": # Testing if movie torrnet exists (space button pressed)
+        elif choice == ' ': # Testing if movie torrnet exists (space button pressed)
             os.system("cls")
             temp = keyword
             open_in_browser("https://snowfl.com", 4)
@@ -273,7 +303,7 @@ while 1:
                 keyword = temp
 
             choice = movie_opt() # Show main menu
-        elif choice.encode(encoding = 'UTF-8') == b'\x1b': # Exit (escape key pressed)
+        elif choice.encode(encoding = "UTF-8") == b'\x1b': # Exit (escape key pressed)
             raise SystemExit(0)
         else:
             os.system("cls")

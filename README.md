@@ -50,9 +50,10 @@ Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file `IMDb_wlist_exp_link` value **_(Double quoted)_**.
 ### Custom Configuration using config.json file _(optional)_
+#### - true/false values <ins>MUST NOT</ins> be double quoted
 
 - Save default search action, after movie title entry/selection, saving time from pressing a last search option button.  
-- Edit `config.json` file's `def_search_action` value with the desired option **_(Double quoted)_**.
+- Edit `config.json` file's `default_search_action` value with the desired option .
 - Auto torrent download with `true` value in `add_torrent_auto` option **_(Double quoted)_**.
 - Auto tab close after torrent addition by setting `true` the value of `close_tab_after_torrent_add` **_(Double quoted)_**.
 - The `config.json` file is _not required for script execution_, making it standalone.
