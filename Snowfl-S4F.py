@@ -324,5 +324,8 @@ while 1:
             raise SystemExit(0)
         else:
             os.system("cls")
-            print("+--------------------------+\n|!! Wrong button pressed !!|\n|---> Please try again <---|\n+--------------------------+\n")
+            print("""+--------------------------+
+                \r|!! Wrong button pressed !!|
+                \r|---> Please try again <---|
+                \r+--------------------------+\n""")
             choice = movie_opt() # Show main menu
