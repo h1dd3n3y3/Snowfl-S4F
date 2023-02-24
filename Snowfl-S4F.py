@@ -42,10 +42,10 @@ def get_add_magnet(): # Save magnet link
     else:
         open_in_browser(link, 0.1)
 
-        if config != None:
-            if config["close_tab_after_torrent_add"] == "true":
+        if config != None: # If config exists
+            if config["browser"]["close_tab_after_torrent_add"]:
                 close_tab() # Close browser tab
-            if config["open_bittorrent_client_after"] == "true":
+            if config["torrent"]["open_bittorrent_client_after"]:
                 os.system('cmd /c "' + bittorr_cli + '"') # Launch bittorrent client
 
 def copy_link_to_clip(delay): # Save url link
@@ -133,23 +133,32 @@ def read_config(filename):
     return config
 
 def movie_opt():
-    print("Select search option for \""+ keyword +"\":\n\n1. Movie.\n2. Subtitles.\n3. Movie & Subtitles.\n0. Re-enter movie keywords.\n\nSpace. Check if torrent available.\nEsc. Exit.\n----------------------------------\nPress one of the above buttons:")
+    print(f"""Select search option for \"{keyword}\":\n
+        \r1. Movie.
+        \r2. Subtitles.
+        \r3. Movie & Subtitles.
+        \r0. Re-enter movie keywords.\n
+        \rSpace. Check if torrent available.
+        \rEsc. Exit.
+        \r----------------------------------
+        \rPress one of the above buttons:""")
+
     return str(msvcrt.getch().decode("utf-8")) # Get pressed button
 
-def watchlist_part1(url):
+def watchlist_part1(watchlist_url):
     i = 0;
 
-    # Redownload and refresh IMDb watchlist
-    response = requests.get(url)
+    # watchlist download
+    response = requests.get(watchlist_url)
     open("./init_watchlist.csv", "wb").write(response.content)
 
     try:
-        with open("./init_watchlist.csv", 'r') as f:
-            with open("./watchlist.csv", 'w') as f1:
-                next(f) # skip header line
+        with open("./init_watchlist.csv", 'r') as f_old:
+            with open("./watchlist.csv", 'w') as f_new:
+                next(f_old) # skip header line
 
-                for line in f:
-                    f1.write(line)
+                for line in f_old:
+                    f_new.write(line)
     except:
         return "Unknown"
 
@@ -186,18 +195,25 @@ def watchlist_part2(i):
         for a in range(i):
             print(str(a + 1) + ". " + movieList[a] + " (" + day_monthList[a] + ")  --  " + ratingList[a])
         
-        print("\n0. Jump back to enter movie keywords.")
-        watchlistSelection = (input("---------------------------------------\nChoose a movie number (1-" + str(i) + "): "))
+        print("""\n0. Jump back to enter movie keywords.
+            \r---------------------------------------\n""")
+        watchlistSelection = (input("Choose a movie number (1-" + str(i) + "): "))
 
         if watchlistSelection == "":
             os.system("cls")
-            print("+------------------------+\n|!! No movie selected. !!|\n|--> Please try again <--|\n+------------------------+\n")
+            print("""+------------------------+
+                \r|!! No movie selected. !!|
+                \r|--> Please try again <--|
+                \r+------------------------+\n""")
         elif int(watchlistSelection) == 0:
             os.system("cls")
             return "back"
         elif int(watchlistSelection) < 0 or int(watchlistSelection) > i:
             os.system("cls")
-            print("+--------------------------+\n|!! Wrong button pressed !!|\n|---> Please try again <---|\n+--------------------------+\n")
+            print("""+--------------------------+
+                \r|!! Wrong button pressed !!|
+                \r|---> Please try again <---|
+                \r+--------------------------+\n""")
         else:
             return movieList[int(watchlistSelection) - 1]
 
@@ -207,7 +223,8 @@ while not ping_req("google.com"): # Check internet connection
     os.system("pause")
 
 if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
-    print("No Bittorrent client installed . . .\nDownload qBittorrent (recommended) and continue?(y/n)")
+    print("""No Bittorrent client installed . . .
+        \rDownload qBittorrent (recommended) and continue?(y/n)""")
     if msvcrt.getch().decode("utf-8") == 'y':
         download_qbittorrent()
     else:
@@ -220,8 +237,8 @@ browser = get_default_browser()
 config = read_config("config.json") # Collection of config options included in the config.json file
 
 if config != None: # If config file is present
-    if config["IMDb_watchlist_export_link"].endswith("/export"): # Check config file for watchlist export link
-        tot_mov = watchlist_part1(config["IMDb_watchlist_export_link"]) # Declare and save watchlist's total movie number
+    if config["browser"]["IMDb_watchlist_export_link"].endswith("/export"): # Check config file for watchlist export link
+        tot_mov = watchlist_part1(config["browser.IMDb_watchlist_export_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
 while 1:
@@ -232,7 +249,7 @@ while 1:
             keyword = "back"
 
             while keyword == "back":
-                keyword = input("Enter movie keywords (or leave blank & press enter to show IMDb watchlist):\n")
+                keyword = input("Enter movie keywords (leave empty for IMDb watchlist):\n")
                 
                 if not keyword: # Empty keyword (pressed enter)
                     os.system("cls")
@@ -249,11 +266,11 @@ while 1:
             continue
 
     if config != None: # If config file is present
-        if not config["default_search_action"] or config["default_search_action"] == "0": # If default search action not set in config file or set to "0"
+        if config["browser"]["default_search_action"] in range(1, 4): # If default search action not between 1-3
+            choice = str(config["browser"]["default_search_action"])
+        else:
             os.system("cls")
             choice = movie_opt() # Show main menu
-        else:
-            choice = config["default_search_action"]
     else: # If config file is not present
         os.system("cls")
         choice = movie_opt() # Show main menu
@@ -265,7 +282,7 @@ while 1:
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            if config != None and config["add_torrent_auto"] == "true":
+            if config != None and config["torrent"]["auto_select"]:
                 get_add_magnet()
 
             raise SystemExit(0)
@@ -283,7 +300,7 @@ while 1:
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            if config != None and config["add_torrent_auto"] == "true":
+            if config != None and config["torrent.auto_select"]:
                 get_add_magnet()
 
             raise SystemExit(0)
