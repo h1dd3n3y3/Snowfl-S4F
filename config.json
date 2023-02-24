@@ -1,11 +1,11 @@
 {
     "browser": {
         "IMDb_watchlist_export_link": "",
-        "default_search_action": "1",
+        "default_search_action": 1,
         "close_tab_after_torrent_add": true
     },
     "torrent": {
-        "add_torrent_auto": true,
+        "auto_select": true,
         "open_bittorrent_client_after": true,
         "qbittorrent": {
             "webui_on": true,
