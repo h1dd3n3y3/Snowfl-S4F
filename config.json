@@ -1,7 +1,7 @@
 {
     "browser": {
         "IMDb_watchlist_export_link": "",
-        "default_search_action": 1,
+        "default_search_action": 0,
         "close_tab_after_torrent_add": true
     },
     "torrent": {

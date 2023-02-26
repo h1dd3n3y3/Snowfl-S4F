@@ -106,6 +106,8 @@ def qbittorrent_webui_actions():
         if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")):
             if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")):
                 if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in:
+                    os.system("cls")
+                    print("Downloading...")
                     while 1:
                         torrents = qbt_client.torrents_info()
                         for t in torrents:
@@ -344,7 +346,7 @@ while 1:
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            if config != None and config["torrent][auto_select"]:
+            if config != None and config["torrent"]["auto_select"]:
                 magnet_link = save_add_magnet_link()
 
             qbittorrent_webui_actions()
