@@ -116,7 +116,7 @@ def qbittorrent_webui_actions():
                                 if config["torrent"]["qbittorrent"]["on_download"]["close_window"]:
                                     close_bittorrent_on_finish(get_default_bittorrent_client_path()) # Close qbittorrent window
                                 if config["torrent"]["qbittorrent"]["on_download"]["open_torrent_folder"]:
-                                    os.system(f'start "" "{t.content_path}"') # Open torrent folder
+                                    os.system(f'start "" "{os.path.dirname(t.content_path)}"') # Open torrent folder
                                 return
                             else:
                                 break
@@ -280,7 +280,7 @@ config = read_config("config.json") # Collection of config options included in t
 
 if config != None: # If config file is present
     if config["browser"]["IMDb_watchlist_export_link"].endswith("/export"): # Check config file for watchlist export link
-        tot_mov = watchlist_part1(config["browser.IMDb_watchlist_export_link"]) # Declare and save watchlist's total movie number
+        tot_mov = watchlist_part1(config["browser"]["IMDb_watchlist_export_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
 while 1:
