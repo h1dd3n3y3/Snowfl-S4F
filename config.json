@@ -6,10 +6,13 @@
     },
     "torrent": {
         "auto_select": true,
-        "open_bittorrent_client_after": true,
+        "auto_launch_client": true,
         "qbittorrent": {
-            "webui_on": true,
-            "close_after_downlaod_finish": true
+            "on_download": {
+                "delete_torrent": true,
+                "close_window": true,
+                "open_torrent_folder": true
+            }
         }
     }
 }

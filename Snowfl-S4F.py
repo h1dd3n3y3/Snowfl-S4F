@@ -1,4 +1,7 @@
-import os, winreg, win32gui, win32con, webbrowser, datetime, time, msvcrt, keyboard, csv, json, requests, ping3, clipboard
+import os, winreg, webbrowser, datetime, time, msvcrt
+import requests, ping3, qbittorrentapi
+import csv, json, configparser
+import win32gui, win32con, keyboard, clipboard
 
 def close_tab():
     keyboard.press_and_release("ctrl+w")
@@ -28,7 +31,7 @@ def find_in_browser(keyword):
     keyboard.press_and_release("esc")
     time.sleep(0.1)
 
-def get_add_magnet(): # Save magnet link
+def save_add_magnet_link(): # Save magnet link
     keyboard.press_and_release("tab")
     time.sleep(0.1)
     copy_link_to_clip(0.1)
@@ -38,15 +41,17 @@ def get_add_magnet(): # Save magnet link
         if link.endswith("/#fetch"):
             find_in_browser("next")
             
-        get_add_magnet()
+        save_add_magnet_link()
     else:
         open_in_browser(link, 0.1)
 
         if config != None: # If config exists
             if config["browser"]["close_tab_after_torrent_add"]:
                 close_tab() # Close browser tab
-            if config["torrent"]["open_bittorrent_client_after"]:
-                os.system('cmd /c "' + bittorr_cli + '"') # Launch bittorrent client
+            if config["torrent"]["auto_launch_client"]:
+                os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
+    
+    return link
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -89,11 +94,47 @@ def get_default_bittorrent_client_path():
     except WindowsError:
         return "Unknown"
 
-def close_qbittorrent_on_finish(bittorrent_client_path):
-    name, ext = os.path.splitext(os.path.basename(bittorrent_client_path))
+def qbittorrent_webui_actions():
+    name, ext = os.path.splitext(os.path.basename(get_default_bittorrent_client_path())) # Save bittorrent client name
 
-    if name != "qbittorrent":
+    if name == "qbittorrent":
+        qbt_config_file = os.path.join(os.getenv("APPDATA"), "qBittorrent", "qBittorrent.ini")
+
+        qbt_config = configparser.ConfigParser()
+        qbt_config.read(qbt_config_file)
+
+        if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")):
+            if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")):
+                if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in:
+                    while 1:
+                        torrents = qbt_client.torrents_info()
+                        for t in torrents:
+                            if t.state == "stalledUP":
+                                print("Download finished")
+                                if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
+                                    t.delete(t.hash) # Delete torrent
+                                if config["torrent"]["qbittorrent"]["on_download"]["close_window"]:
+                                    close_bittorrent_on_finish(get_default_bittorrent_client_path()) # Close qbittorrent window
+                                if config["torrent"]["qbittorrent"]["on_download"]["open_torrent_folder"]:
+                                    os.system(f'start "" "{t.content_path}"') # Open torrent folder
+                                return
+                            else:
+                                break
+                            time.sleep(1)
+                        else:
+                            print("No active torrents")
+                            break
+                else:
+                    print("Failed to authenticate with qBittorrent WebUI")
+            else:
+                print("localhost authentication bypass is unckecked")
+        else:
+            print("qBittorrent WebUI not enabled")
+    else:
         return
+
+def close_bittorrent_on_finish(bittorrent_client_path):
+    name, ext = os.path.splitext(os.path.basename(bittorrent_client_path))
 
     def find_torrent_window(hwnd, _):
         window_title = win32gui.GetWindowText(hwnd)
@@ -108,6 +149,7 @@ def download_qbittorrent():
     find_in_browser("qBittorrent Windows x64")
     keyboard.press_and_release("esc")
     keyboard.press_and_release("enter")
+    close_tab()
 
 def open_in_browser(url, delay):
     webbrowser.open(url)
@@ -133,7 +175,7 @@ def read_config(filename):
     return config
 
 def movie_opt():
-    print(f"""Select search option for \"{keyword}\":\n
+    print(f'''Select search option for "{keyword}":\n
         \r1. Movie.
         \r2. Subtitles.
         \r3. Movie & Subtitles.
@@ -141,7 +183,7 @@ def movie_opt():
         \rSpace. Check if torrent available.
         \rEsc. Exit.
         \r----------------------------------
-        \rPress one of the above buttons:""")
+        \rPress one of the above buttons:''')
 
     return str(msvcrt.getch().decode("utf-8")) # Get pressed button
 
@@ -283,15 +325,17 @@ while 1:
             find_in_browser("1080p")
 
             if config != None and config["torrent"]["auto_select"]:
-                get_add_magnet()
+                manget_link = save_add_magnet_link()
+            
+            qbittorrent_webui_actions()
 
             raise SystemExit(0)
         elif choice == '2': # Subtitles Search (2 button pressed)
-            open_in_browser("https://www.subs4free.club/search_report.php?search=" + keyword + "&searchType=1", 0)
+            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 0)
 
             raise SystemExit(0)
         elif choice == '3': # Movie & Subtitles Search (3 button pressed)
-            open_in_browser("https://www.subs4free.club/search_report.php?search=" + keyword + "&searchType=1", 2)
+            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 2)
             open_in_browser("https://snowfl.com", 2)
 
             for i in range(2):
@@ -300,8 +344,10 @@ while 1:
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            if config != None and config["torrent.auto_select"]:
-                get_add_magnet()
+            if config != None and config["torrent][auto_select"]:
+                magnet_link = save_add_magnet_link()
+
+            qbittorrent_webui_actions()
 
             raise SystemExit(0)
         elif choice == '0': # Go back to keyword input (0 button pressed)
