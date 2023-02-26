@@ -118,7 +118,9 @@ def qbittorrent_webui_actions():
                                 if config["torrent"]["qbittorrent"]["on_download"]["close_window"]:
                                     close_bittorrent_on_finish(get_default_bittorrent_client_path()) # Close qbittorrent window
                                 if config["torrent"]["qbittorrent"]["on_download"]["open_torrent_folder"]:
-                                    os.system(f'start "" "{os.path.dirname(t.content_path)}"') # Open torrent folder
+                                    torrent_path = t.content_path
+                                    os.system(f'explorer.exe "{torrent_path}"') # Open torrent folder
+                                    print(f'Opening "{torrent_path}"')
                                 return
                             else:
                                 break
