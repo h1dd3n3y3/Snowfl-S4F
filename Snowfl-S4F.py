@@ -107,12 +107,11 @@ def qbittorrent_webui_actions():
             if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")):
                 if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in:
                     os.system("cls")
-                    print("Downloading...")
+                    print("Downloading . . .")
                     while 1:
                         torrents = qbt_client.torrents_info()
                         for t in torrents:
                             if t.state == "stalledUP":
-                                print("Download finished")
                                 if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
                                     t.delete(t.hash) # Delete torrent
                                 if config["torrent"]["qbittorrent"]["on_download"]["close_window"]:
@@ -120,7 +119,6 @@ def qbittorrent_webui_actions():
                                 if config["torrent"]["qbittorrent"]["on_download"]["open_torrent_folder"]:
                                     torrent_path = t.content_path
                                     os.system(f'explorer.exe "{torrent_path}"') # Open torrent folder
-                                    print(f'Opening "{torrent_path}"')
                                 return
                             else:
                                 break
