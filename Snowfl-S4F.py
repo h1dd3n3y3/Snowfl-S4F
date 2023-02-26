@@ -3,8 +3,9 @@ import requests, ping3, qbittorrentapi
 import csv, json, configparser
 import win32gui, win32con, keyboard, clipboard
 
-def close_tab():
+def close_tab(delay):
     keyboard.press_and_release("ctrl+w")
+    time.sleep(delay)
 
 def change_win(delay):
     keyboard.press_and_release("alt+tab")
@@ -47,7 +48,7 @@ def save_add_magnet_link(): # Save magnet link
 
         if config != None: # If config exists
             if config["browser"]["close_tab_after_torrent_add"]:
-                close_tab() # Close browser tab
+                close_tab(0.1) # Close browser tab
             if config["torrent"]["auto_launch_client"]:
                 os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
     
@@ -122,7 +123,7 @@ def qbittorrent_webui_actions():
                                 return
                             else:
                                 break
-                            time.sleep(1)
+                            time.sleep(5)
                         else:
                             print("No active torrents")
                             break
@@ -151,7 +152,7 @@ def download_qbittorrent():
     find_in_browser("qBittorrent Windows x64")
     keyboard.press_and_release("esc")
     keyboard.press_and_release("enter")
-    close_tab()
+    close_tab(0)
 
 def open_in_browser(url, delay):
     webbrowser.open(url)
