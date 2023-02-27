@@ -260,7 +260,7 @@ def watchlist_part2(i):
 
         if watchlistSelection == "":
             os.system("cls")
-            wrong_input_box(" No movie selected  ")
+            wrong_input_box(" No movie selected  l  ")
             
         elif int(watchlistSelection) == 0:
             os.system("cls")
@@ -351,7 +351,7 @@ while 1:
             open_in_browser("https://snowfl.com", 2)
 
             for i in range(2):
-                change_win(0.1)
+                change_win(0.2)
             
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
