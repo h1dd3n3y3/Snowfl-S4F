@@ -8,6 +8,12 @@ def press_any_key(msg, prmt_msg):
         \rPress any key to {prmt_msg} . . .""")
     os.system("pause >nul")
 
+def wrong_input_box(msg):
+    print(f"""+--------------------------+
+        \r|!! {msg} !!|
+        \r|---> Please try again <---|
+        \r+--------------------------+\n""")
+
 def close_tab(delay):
     keyboard.press_and_release("ctrl+w")
     time.sleep(delay)
@@ -254,19 +260,14 @@ def watchlist_part2(i):
 
         if watchlistSelection == "":
             os.system("cls")
-            print("""+------------------------+
-                \r|!! No movie selected. !!|
-                \r|--> Please try again <--|
-                \r+------------------------+\n""")
+            wrong_input_box(" No movie selected  ")
+            
         elif int(watchlistSelection) == 0:
             os.system("cls")
             return "back"
         elif int(watchlistSelection) < 0 or int(watchlistSelection) > i:
             os.system("cls")
-            print("""+--------------------------+
-                \r|!! Wrong button pressed !!|
-                \r|---> Please try again <---|
-                \r+--------------------------+\n""")
+            wrong_input_box("Wrong button pressed")
         else:
             return movieList[int(watchlistSelection) - 1]
 
@@ -381,8 +382,5 @@ while 1:
             raise SystemExit(0)
         else:
             os.system("cls")
-            print("""+--------------------------+
-                \r|!! Wrong button pressed !!|
-                \r|---> Please try again <---|
-                \r+--------------------------+\n""")
+            wrong_input_box("Wrong button pressed")
             choice = movie_opt() # Show main menu
