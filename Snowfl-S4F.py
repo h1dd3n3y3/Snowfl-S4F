@@ -1,7 +1,7 @@
-import os, winreg, webbrowser, datetime, time, msvcrt
-import requests, qbittorrentapi
-import csv, json, configparser
-import win32gui, win32con, keyboard, clipboard
+import os, winreg, webbrowser, datetime, time, msvcrt # Built-in libraries
+import requests, qbittorrentapi                 ##
+import csv, json, configparser                  ### 3rd-party libraries
+import win32gui, win32con, keyboard, clipboard  ##
 
 def press_any_key(msg, prmt_msg):
     print(f"""{msg}
