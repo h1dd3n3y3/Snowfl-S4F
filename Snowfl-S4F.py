@@ -18,13 +18,27 @@ def close_tab(delay):
     keyboard.press_and_release("ctrl+w")
     time.sleep(delay)
 
-def change_win(delay):
-    keyboard.press_and_release("alt+tab")
+def change_win(delay, option = None):
+    if option == None:
+        keyboard.press_and_release("alt+tab")
+    elif option == "next":    
+        keyboard.press("alt")
+        
+        for i in range(2):
+            keyboard.press_and_release("tab")
+            time.sleep(0.1)
+        
+        keyboard.release("alt")
+    
     time.sleep(delay)
 
 def ping_req(hostname):
+    if hostname == "google.com":
+        print("Checking internet access . . .")
+
     try:
         response = requests.head(f"https://{hostname}", timeout=5)
+        print("Connected!")
         return True
     except:
         return False
@@ -142,13 +156,17 @@ def qbittorrent_webui_actions():
                             print("No active torrents")
                             break
                 else:
+                    os.system("cls")
+                    change_win(0, "next")
                     press_any_key("Failed to authenticate with qBittorrent WebUI . . .", "exit")
             else:
+                os.system("cls")
+                change_win(0, "next")
                 press_any_key("localhost authentication bypass is disabled . . .", "exit")
         else:
+            os.system("cls")
+            change_win(0, "next")
             press_any_key("qBittorrent WebUI not enabled . . .", "exit")
-    else:
-        return
 
 def close_bittorrent_on_finish(bittorrent_client_path):
     name, ext = os.path.splitext(os.path.basename(bittorrent_client_path))
