@@ -113,9 +113,9 @@ def qbittorrent_webui_actions():
                 if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in: # Check the login status
                     os.system("cls")
                     print("""Downloading torrent . . .\n
-                        \rqBittorrent monitoring is undergoing . . .
+                        \rqBittorrent is being currently monitored . . .
                         \rThis window will stay open until the download is finished.
-                        \rIf you close it manually, any qbittorrent action will be ignored.\n
+                        \rIf you close it manually, any qbittorrent actions will be ignored.\n
                         \rPlease wait patiently . . .""")
                     while 1:
                         torrents = qbt_client.torrents_info() # Get torrents list
