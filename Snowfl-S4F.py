@@ -1,7 +1,12 @@
 import os, winreg, webbrowser, datetime, time, msvcrt
-import requests, ping3, qbittorrentapi
+import requests, qbittorrentapi
 import csv, json, configparser
 import win32gui, win32con, keyboard, clipboard
+
+def press_any_key(msg, prmt_msg):
+    print(f"""{msg}
+        \rPress any key to {prmt_msg} . . .""")
+    os.system("pause >nul")
 
 def close_tab(delay):
     keyboard.press_and_release("ctrl+w")
@@ -13,9 +18,9 @@ def change_win(delay):
 
 def ping_req(hostname):
     try:
-        ping3.ping(hostname, timeout=1)
+        response = requests.head(f"https://{hostname}", timeout=5)
         return True
-    except ping3.exceptions.PingError:
+    except:
         return False
 
 def find_in_browser(keyword):
@@ -38,21 +43,20 @@ def save_add_magnet_link(): # Save magnet link
     copy_link_to_clip(0.1)
     link = clipboard.paste()
 
-    if not link.startswith("magnet"):
-        if link.endswith("/#fetch"):
-            find_in_browser("next")
-            
-        save_add_magnet_link()
-    else:
-        open_in_browser(link, 0.1)
+    if link.startswith("http") or link.startswith("magnet"):
+        if not link.startswith("magnet"):
+            if link.endswith("/#fetch"):
+                find_in_browser("next")
+                
+            save_add_magnet_link()
+        else:
+            open_in_browser(link, 0.1)
 
-        if config != None: # If config exists
-            if config["browser"]["close_tab_after_torrent_add"]:
-                close_tab(0.1) # Close browser tab
-            if config["torrent"]["auto_launch_client"]:
-                os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
-    
-    return link
+            if config != None: # If config exists
+                if config["browser"]["close_tab_after_torrent_add"]:
+                    close_tab(0.1) # Close browser tab
+                if config["torrent"]["auto_launch_client"]:
+                    os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -104,13 +108,17 @@ def qbittorrent_webui_actions():
         qbt_config = configparser.ConfigParser()
         qbt_config.read(qbt_config_file)
 
-        if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")):
-            if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")):
-                if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in:
+        if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")): # Check qbtittorrent config & if WebUI is enabled
+            if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")): # Check if localhost authentication bypass is enabled
+                if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in: # Check the login status
                     os.system("cls")
-                    print("Downloading . . .")
+                    print("""Downloading torrent . . .\n
+                        \rqBittorrent monitoring is undergoing . . .
+                        \rThis window will stay open until the download is finished.
+                        \rIf you close it manually, any qbittorrent action will be ignored.\n
+                        \rPlease wait patiently . . .""")
                     while 1:
-                        torrents = qbt_client.torrents_info()
+                        torrents = qbt_client.torrents_info() # Get torrents list
                         for t in torrents:
                             if t.state == "stalledUP":
                                 if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
@@ -128,11 +136,11 @@ def qbittorrent_webui_actions():
                             print("No active torrents")
                             break
                 else:
-                    print("Failed to authenticate with qBittorrent WebUI")
+                    press_any_key("Failed to authenticate with qBittorrent WebUI . . .", "exit")
             else:
-                print("localhost authentication bypass is unckecked")
+                press_any_key("localhost authentication bypass is disabled . . .", "exit")
         else:
-            print("qBittorrent WebUI not enabled")
+            press_any_key("qBittorrent WebUI not enabled . . .", "exit")
     else:
         return
 
@@ -264,8 +272,8 @@ def watchlist_part2(i):
 
 #? <======================= MAIN APP =======================>
 while not ping_req("google.com"): # Check internet connection
-    print("No internet connection . . .")
-    os.system("pause")
+    os.system("cls")
+    press_any_key("No internet connection . . .", "retry")
 
 if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     print("""No Bittorrent client installed . . .
