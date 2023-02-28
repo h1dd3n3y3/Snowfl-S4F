@@ -29,7 +29,7 @@ Delay, before every action, adjusted for the average computer.
   - Keep `python` and `pip` version up-to-date.
   - Downlaod windows installer form [**_HERE_**](https://www.python.org/downloads/windows).
 - #### Python libraries
-  - **EITHER** _pip-install_ the libraries:  
+  - **EITHER** install the libraries:  
   
     `keyboard` (keystroke injection)  
     `clipboard` (clipboard access)  
@@ -39,11 +39,11 @@ Delay, before every action, adjusted for the average computer.
     `configparser` (qbittorrent config access)  
     `pyinstaller` (_.py_ to _.exe_ conversion)  
     
-    like:
+    using pip:
     ```
     pip install <lib_name>
     ```
-  - **OR** run, in terminal:
+  - **OR** run:
     ```
     pip install -r requirements.txt
     ```
