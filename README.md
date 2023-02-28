@@ -67,9 +67,14 @@ Delay, before every action, adjusted for the average computer.
 ## <ins>Custom Configuration using config.json file</ins> _(optional)_
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
 - ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic).
-- ### JSON Mapping:
+### JSON Mapping:
+- #### For everyone:
   - <ins>**IMDb Watchlist:**</ins> `IMDb_watchlist_export_link` to export link **_(ending with "/export")_**.
   - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 will be ignored)_**.
-  - <ins>**Auto torrent selection:**</ins> `auto_select` to `true/false` or leave empty.
-  - <ins>**Auto close browser tab**</ins> after auto torrent selection: `close_tab_after_torrent_add` to `true/false` or leave empty.
-  - <ins>**Open Bittorrent client**</ins>, (just in case it won't launch automatically): `auto_launch_client` to `true/false` or leave empty.
+  - <ins>**Auto torrent selection:**</ins> `auto_select` to `true/false`.
+  - <ins>**Auto close browser tab**</ins>, after auto torrent selection: `close_tab_after_torrent_add` to `true/false`.
+  - <ins>**Open Bittorrent client**</ins>, (just in case it won't launch automatically): `auto_launch_client` to `true/false`.
+- #### For qBittorrent users, on torrent download finished:
+  - <ins>**Delete torrent:**</ins> `delete_torrent` to `true/false`.
+  - <ins>**Close qBittorrent window:**</ins> `close_window` to `true/false`.
+  - <ins>**Open torrent folder:**</ins> `open_torrent_folder` to `true/false`.
