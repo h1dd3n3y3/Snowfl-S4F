@@ -31,7 +31,9 @@ Delay, before every action, adjusted for the average computer.
 - #### Python libraries
   - **EITHER** _pip-install_ the libraries:  
   
-    `keyboard` `clipboard` `requests`  
+    `keyboard` (keystroke injection)  
+    `clipboard` (clipboard access)  
+    `requests` (http requests)  
     `pywin32` (window events)  
     `qbittorrent-api` (torrent automation)  
     `configparser` (read qbittorrent config)
