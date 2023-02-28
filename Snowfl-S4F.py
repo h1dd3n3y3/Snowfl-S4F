@@ -77,6 +77,10 @@ def save_add_magnet_link(): # Save magnet link
                     close_tab(0.1) # Close browser tab
                 if config["torrent"]["auto_launch_client"]:
                     os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
+    else:
+        os.system("cls")
+        change_win(0)
+        press_any_key(f'No "{keyword}" torrents found . . .', "exit")
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
