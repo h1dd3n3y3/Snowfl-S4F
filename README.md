@@ -35,9 +35,9 @@ Delay, before every action, adjusted for the average computer.
     `clipboard` (clipboard access)  
     `requests` (http requests)  
     `pywin32` (window events)  
-    `qbittorrent-api` (torrent automation)  
-    `configparser` (read qbittorrent config)  
-    `pyinstaller` (convert _.py_ to _.exe_)  
+    `qbittorrent-api` (qbittorrent WebUI remote interraction)  
+    `configparser` (qbittorrent config access)  
+    `pyinstaller` (_.py_ to _.exe_ conversion)  
     
     like:
     ```
