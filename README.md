@@ -63,7 +63,7 @@ Delay, before every action, adjusted for the average computer.
   - `-y`: Consent to every prompt pyinstaller might ask.
 ## Optional goodies
 ## <ins>IMDb Watchlist integration</ins>
-  - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
+  - Publicly available Watchlist: IMDb web login -> `Watchlist` -> `Edit` -> `Settings` -> `Privacy: "Public"`.
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file.
  ## <ins>qBittorrent integration</ins>
