@@ -67,7 +67,7 @@ Delay, before every action, adjusted for the average computer.
 ## <ins>Custom Configuration using config.json file</ins> _(optional)_
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
 - ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic).
-### JSON Mapping:
+### <ins>JSON Mapping</ins>
 - #### For everyone:
   - <ins>**IMDb Watchlist:**</ins> `IMDb_watchlist_export_link` to export link **_(ending with "/export")_**.
   - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 will be ignored)_**.
