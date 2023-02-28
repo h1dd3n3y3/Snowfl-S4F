@@ -39,11 +39,11 @@ Delay, before every action, adjusted for the average computer.
     `configparser` (qbittorrent config access)  
     `pyinstaller` (_.py_ to _.exe_ conversion)  
     
-    using pip:
+    manually:
     ```
     pip install <lib_name>
     ```
-  - **OR** run:
+  - **OR** using the _requirements.txt_ file:
     ```
     pip install -r requirements.txt
     ```
