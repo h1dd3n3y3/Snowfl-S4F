@@ -63,14 +63,14 @@ Delay, before every action, adjusted for the average computer.
   - `-y`: Consent to every prompt pyinstaller might ask.
 ## Optional goodies
 ## <ins>IMDb Watchlist integration</ins>
-  - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
+  - Publicly available Watchlist: IMDb web login -> `Watchlist` -> `Edit` -> `Settings` -> `Privacy: "Public"`.
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file.
  ## <ins>qBittorrent integration</ins>
   - WebUI must be enabled: Options -> Web UI -> check Web User Interface (Remote Control) option.
     - Set desired `port` (make sure no other app is using it, mine was VLC)
     - Crucial: check `Bypass authentication for clients on localhost` option.
-  - Then: `Apply` -> `OK`.
+  - Click: `Apply` -> `OK`.
   - Restart qBittorrent: bottom right `icon tray` -> `right click` -> `exit` -> `relaunch`.
 ## <ins>Custom Configuration using config.json file</ins>
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
