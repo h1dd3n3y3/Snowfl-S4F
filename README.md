@@ -31,9 +31,11 @@ Delay, before every action, adjusted for the average computer.
 - #### Python libraries
   - **EITHER** _pip-install_ the libraries:  
   
-    `keyboard` `requests` `datetime` `clipboard`  
-    `pyinstaller` (convert py to exe)  
-    `qbittorrent` (currently unnecessary)  
+    `keyboard` `clipboard` `requests`  
+    `pywin32` (window events)  
+    `qbittorrent-api` (torrent automation)  
+    `configparser` (read qbittorrent config)
+    `pyinstaller` (convert _.py_ to _.exe_)  
     
     like:
     ```
