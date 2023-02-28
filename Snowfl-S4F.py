@@ -151,10 +151,10 @@ def qbittorrent_webui_actions():
                                 return
                             else:
                                 break
-                            time.sleep(5)
                         else:
                             print("No active torrents")
                             break
+                        time.sleep(5)
                 else:
                     os.system("cls")
                     change_win(0, "next")
