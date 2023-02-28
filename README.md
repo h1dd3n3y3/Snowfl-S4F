@@ -36,7 +36,7 @@ Delay, before every action, adjusted for the average computer.
     `requests` (http requests)  
     `pywin32` (window events)  
     `qbittorrent-api` (torrent automation)  
-    `configparser` (read qbittorrent config)
+    `configparser` (read qbittorrent config)  
     `pyinstaller` (convert _.py_ to _.exe_)  
     
     like:
