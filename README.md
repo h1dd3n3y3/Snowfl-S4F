@@ -70,7 +70,7 @@ Delay, before every action, adjusted for the average computer.
   - WebUI must be enabled: Options -> Web UI -> check Web User Interface (Remote Control) option.
     - Set desired `port` (make sure no other app is using it, mine was VLC)
     - Crucial: check `Bypass authentication for clients on localhost` option.
-  - Then: `Apply` -> `OK`.
+  - Click: `Apply` -> `OK`.
   - Restart qBittorrent: bottom right `icon tray` -> `right click` -> `exit` -> `relaunch`.
 ## <ins>Custom Configuration using config.json file</ins>
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
