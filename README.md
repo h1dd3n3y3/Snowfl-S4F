@@ -60,7 +60,7 @@ Delay, before every action, adjusted for the average computer.
   - `--paths`: There's a chance it might be necessary to point pyinstaller to the python libraries folder.
   - `.\Snowfl-S4F`: The python script itself.
   - `-y`: Consent to every prompt pyinstaller might ask.
-## Optionals
+## Optional goodies
 ## <ins>IMDb Watchlist integration</ins>
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
