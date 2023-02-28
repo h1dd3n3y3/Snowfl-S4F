@@ -127,10 +127,10 @@ def qbittorrent_webui_actions():
     name, ext = os.path.splitext(os.path.basename(get_default_bittorrent_client_path())) # Save bittorrent client name
 
     if name == "qbittorrent":
-        qbt_config_file = os.path.join(os.getenv("APPDATA"), "qBittorrent", "qBittorrent.ini")
+        qbt_config_file = os.path.join(os.getenv("APPDATA"), "qBittorrent", "qBittorrent.ini") # Locate qbittorrent config file
 
-        qbt_config = configparser.ConfigParser()
-        qbt_config.read(qbt_config_file)
+        qbt_config = configparser.ConfigParser()    # 
+        qbt_config.read(qbt_config_file)            # Read qbittorrent config
 
         if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")): # Check qbtittorrent config & if WebUI is enabled
             if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")): # Check if localhost authentication bypass is enabled
@@ -141,23 +141,29 @@ def qbittorrent_webui_actions():
                         \rThis window will stay open until the download is finished.
                         \rIf you close it manually, any qbittorrent actions will be ignored.\n
                         \rPlease wait patiently . . .""")
+
                     while 1:
                         torrents = qbt_client.torrents_info() # Get torrents list
+
                         for t in torrents:
                             if t.state == "stalledUP":
                                 if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
                                     t.delete(t.hash) # Delete torrent
+
                                 if config["torrent"]["qbittorrent"]["on_download"]["close_window"]:
                                     close_bittorrent_on_finish(get_default_bittorrent_client_path()) # Close qbittorrent window
+
                                 if config["torrent"]["qbittorrent"]["on_download"]["open_torrent_folder"]:
                                     torrent_path = t.content_path
                                     os.system(f'explorer.exe "{torrent_path}"') # Open torrent folder
+
                                 return
                             else:
-                                break
+                                break # Request agian for torrent info, taking into consideration only the 1st from the list
                         else:
                             print("No active torrents")
                             break
+
                         time.sleep(5)
                 else:
                     os.system("cls")
