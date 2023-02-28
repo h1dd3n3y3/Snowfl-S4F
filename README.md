@@ -11,9 +11,9 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - Automatic torrent downlaod _(optionally)_
 - 90% Greek and 10% English subtitle content browser
 - No DNS restrictions _(currently)_
-- [**_IMDb WATCHLIST_**](https://github.com/h1dd3n3y3/Snowfl-S4F/tree/master#imdb-watchlist-integration) movie selection _(optionally)_
-- [**_JSON Custom Configuration_**](https://github.com/h1dd3n3y3/Snowfl-S4F/blob/master/README.md#custom-configuration-using-configjson-file-optional) _(optionally)_
-- [**_qBittorrent torrent automation_**](https://github.com/h1dd3n3y3/Snowfl-S4F#qbittorrent-integration) _(optionally)_  
+- [**_IMDb WATCHLIST_**](https://github.com/h1dd3n3y3/Snowfl-S4F#imdb-watchlist-integration) movie selection _(optionally)_
+- [**_qBittorrent torrent automation_**](https://github.com/h1dd3n3y3/Snowfl-S4F#qbittorrent-integration) _(optionally)_
+- [**_JSON Custom Configuration_**](https://github.com/h1dd3n3y3/Snowfl-S4F#custom-configuration-using-configjson-file) _(optionally)_  
 
 ### Browser support:  
 - Chrome
