@@ -72,4 +72,4 @@ Delay, before every action, adjusted for the average computer.
   - Default search action, after movie title entry/selection: `default_search_action` between `1-3` **_(0 will be ignored)_**.
   - Auto torrent selection: `auto_select` to `true/false` or leave empty.
   - Auto close browser tab after torrent added: `close_tab_after_torrent_add` to `true/false` or leave empty.
-  - Open Bittorrent client, (just in case it won't launch automatically): `open_bittorrent_client_after` to `true/false` or leave empty.
+  - Open Bittorrent client, (just in case it won't launch automatically): `auto_launch_client` to `true/false` or leave empty.
