@@ -60,11 +60,18 @@ Delay, before every action, adjusted for the average computer.
   - `--paths`: There's a chance it might be necessary to point pyinstaller to the python libraries folder.
   - `.\Snowfl-S4F`: The python script itself.
   - `-y`: Consent to every prompt pyinstaller might ask.
-## <ins>IMDb Watchlist integration</ins> _(optional)_
+## Optionals
+## <ins>IMDb Watchlist integration</ins>
   - Publicly available Watchlist: IMDb web login -> Watchlist -> Edit -> Settings -> Privacy: "Public".
   - Right-click & copy the `Export this list` link.
   - Paste the Watchlist link in the `config.json` file.
-## <ins>Custom Configuration using config.json file</ins> _(optional)_
+ ## <ins>qBittorrent integration</ins>
+  - WebUI must be enabled: Options -> Web UI -> check Web User Interface (Remote Control) option.
+    - Set desired `port` (make sure no other app is using it, mine was VLC)
+    - Crucial: check `Bypass authentication for clients on localhost` option.
+  - Then: `Apply` -> `OK`.
+  - Restart qBittorrent: bottom right `icon tray` -> `right click` -> `exit` -> `relaunch`.
+## <ins>Custom Configuration using config.json file</ins>
 - ### Both <ins>_.exe_ and _.json_ files</ins> must be <ins>in the same folder</ins> _(if planning to use the config.json)_.
 - ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic).
 ### <ins>JSON Mapping</ins>
