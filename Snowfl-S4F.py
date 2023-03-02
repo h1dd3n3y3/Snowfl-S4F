@@ -1,7 +1,8 @@
 import os, winreg, webbrowser, datetime, time, msvcrt # Built-in libraries
-import requests, qbittorrentapi                 ##
-import csv, json, configparser                  ### 3rd-party libraries
-import win32gui, win32con, keyboard, clipboard  ##
+from bs4 import BeautifulSoup                   #
+import requests, qbittorrentapi, langid         # 3rd-party libraries
+import csv, json, configparser                  #
+import win32gui, win32con, keyboard, clipboard  #
 
 def press_any_key(msg, prmt_msg):
     print(f"""{msg}
@@ -232,6 +233,23 @@ def movie_opt():
 
     return str(msvcrt.getch().decode("utf-8")) # Get pressed button
 
+def check_eng_title(title):
+    lang, prop = langid.classify(title)
+
+    if lang == "en":
+        return True
+    else:
+        return False
+
+def get_eng_title(link):
+    headers = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
+
+    response = requests.get(f"https://www.imdb.com/title/{link}", headers=headers)
+    soup = BeautifulSoup(response.content, "html.parser")
+    movie_title = soup.find("h1").text
+
+    return movie_title
+
 def watchlist_part1(watchlist_url):
     i = 0;
 
@@ -252,6 +270,7 @@ def watchlist_part1(watchlist_url):
     os.remove("./init_watchlist.csv") # Delete old watchlist csv
     f = open("./watchlist.csv", "r+", encoding="utf-8") # Open the watchlist csv
     csv_reader = csv.reader(f) # Read the watchlist csv
+    in_once = 1
 
     for row in csv_reader:
         if row[8] != "": # Exclude non-released movies
@@ -265,8 +284,18 @@ def watchlist_part1(watchlist_url):
                 time_duration = str(h_duration) + "h"
             else:
                 time_duration = str(h_duration) + "h-" + str(m_duration) + "m"
-
-            movieList.append(row[5] + " " + row[-5])
+            
+            movieTitle = row[5]
+            
+            if not check_eng_title(movieTitle):
+                if in_once:
+                    os.system("cls")
+                    print(f'Translating non-english watchlist titles . . .')
+                    in_once = 0
+                
+                movieTitle = get_eng_title(row[1])
+            
+            movieList.append(movieTitle + " " + row[-5])
             ratingList.append(row[8] + "/10  --  " + time_duration + "  --  "  + row[-4])
             day_monthList.append(datetime.datetime.strptime(row[-2], "%Y-%m-%d").strftime("%d-%b-%Y")[0:6])
 

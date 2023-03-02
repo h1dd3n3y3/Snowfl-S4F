@@ -1,6 +1,6 @@
 {
     "browser": {
-        "IMDb_watchlist_export_link": "",
+        "IMDb_watchlist_export_link": "https://www.imdb.com/list/ls505955226/export",
         "default_search_action": 0,
         "close_tab_after_torrent_add": true
     },
