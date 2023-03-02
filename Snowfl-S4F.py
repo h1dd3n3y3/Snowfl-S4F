@@ -35,6 +35,7 @@ def change_win(delay, option = None):
 
 def ping_req(hostname):
     if hostname == "google.com":
+        os.system("cls")
         print("Checking internet access . . .")
 
     try:
@@ -330,7 +331,6 @@ def watchlist_part2(i):
 
 #? <======================= MAIN APP =======================>
 while not ping_req("google.com"): # Check internet connection
-    os.system("cls")
     press_any_key("No internet connection . . .", "retry")
 
 if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
