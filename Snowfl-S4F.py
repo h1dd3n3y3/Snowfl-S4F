@@ -255,7 +255,12 @@ def watchlist_part1(watchlist_url):
     i = 0;
 
     # watchlist download
-    response = requests.get(watchlist_url)
+    try:
+        os.system("cls")
+        print("Getting IMDb watchlist . . .")
+        response = requests.get(watchlist_url)
+    except:
+        return False
     open("./init_watchlist.csv", "wb").write(response.content)
 
     try:
@@ -288,13 +293,15 @@ def watchlist_part1(watchlist_url):
             
             movieTitle = row[5]
             
-            if not check_eng_title(movieTitle):
+            if not check_eng_title(movieTitle): # Check if title is english
                 if in_once:
                     os.system("cls")
                     print(f'Translating non-english watchlist titles . . .')
                     in_once = 0
                 
-                movieTitle = get_eng_title(row[1])
+                movieTitle = get_eng_title(row[1]) # Convert title to english
+                if movieTitle != row[5]:
+                    print(f'"{row[5]}" --> "{movieTitle}"')
             
             movieList.append(movieTitle + " " + row[-5])
             ratingList.append(row[8] + "/10  --  " + time_duration + "  --  "  + row[-4])
@@ -318,7 +325,7 @@ def watchlist_part2(i):
 
         if watchlistSelection == "":
             os.system("cls")
-            wrong_input_box(" No movie selected  l  ")
+            wrong_input_box(" No movie selected  ")
             
         elif int(watchlistSelection) == 0:
             os.system("cls")
@@ -330,8 +337,18 @@ def watchlist_part2(i):
             return movieList[int(watchlistSelection) - 1]
 
 #? <======================= MAIN APP =======================>
-while not ping_req("google.com"): # Check internet connection
-    press_any_key("No internet connection . . .", "retry")
+config = read_config("config.json") # Collection of config options included in the config.json file
+movieList = []
+ratingList = []
+day_monthList = []
+
+while 1:
+    if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
+        or not (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
+            if not ping_req("google.com"): # Check internet connection
+                press_any_key("No internet connection . . .", "retry")
+    else:
+        break
 
 if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     print("""No Bittorrent client installed . . .
@@ -341,15 +358,7 @@ if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     else:
         raise SystemExit(0)
 
-movieList = []
-ratingList = []
-day_monthList = []
 browser = get_default_browser()
-config = read_config("config.json") # Collection of config options included in the config.json file
-
-if config != None: # If config file is present
-    if config["browser"]["IMDb_watchlist_export_link"].endswith("/export"): # Check config file for watchlist export link
-        tot_mov = watchlist_part1(config["browser"]["IMDb_watchlist_export_link"]) # Declare and save watchlist's total movie number
 
 #* <======================= MAIN LOOP =======================>
 while 1:
