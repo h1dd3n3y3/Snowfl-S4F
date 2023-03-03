@@ -35,6 +35,8 @@ Malfunctions are expected, 30% of the time.
   
     `keyboard` (keystroke injection)  
     `clipboard` (clipboard access)  
+    `langid` (english IMDb title validation)  
+    `beautifulsoup4` (english IMDb title fetch)  
     `requests` (http requests)  
     `pywin32` (window events)  
     `qbittorrent-api` (qbittorrent WebUI remote interraction)  
