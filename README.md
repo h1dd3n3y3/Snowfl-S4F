@@ -21,7 +21,7 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - Opera
 
 Delay, before every action, adjusted for the average computer.  
-Malfunctions are expected 30% of the time.
+Malfunctions are expected, 30% of the time.
 ## <ins>Ready Release</ins>
 ### Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 
