@@ -330,9 +330,9 @@ def watchlist_part2(i):
         elif int(watchlistSelection) == 0:
             os.system("cls")
             return "back"
-        elif int(watchlistSelection) < 0 or int(watchlistSelection) > i:
+        elif 0 > int(watchlistSelection) > i:
             os.system("cls")
-            wrong_input_box("Wrong button pressed")
+            wrong_input_box("Wrong number pressed")
         else:
             return movieList[int(watchlistSelection) - 1]
 
