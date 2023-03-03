@@ -10,7 +10,7 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - Find-in-page 1080p torrents
 - Automatic torrent downlaod _(optionally)_
 - 90% Greek and 10% English subtitle content browser
-- No DNS restrictions _(currently)_
+- Generic DNS workaround _(currently slower)_
 - [**_IMDb WATCHLIST_**](https://github.com/h1dd3n3y3/Snowfl-S4F#imdb-watchlist-integration) movie selection _(optionally)_
 - [**_qBittorrent torrent automation_**](https://github.com/h1dd3n3y3/Snowfl-S4F#qbittorrent-integration) _(optionally)_
 - [**_JSON Custom Configuration_**](https://github.com/h1dd3n3y3/Snowfl-S4F#custom-configuration-using-configjson-file) _(optionally)_  
@@ -20,7 +20,8 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - Firefox
 - Opera
 
-Delay, before every action, adjusted for the average computer.
+Delay, before every action, adjusted for the average computer.  
+Malfunctions are expected, 30% of the time.
 ## <ins>Ready Release</ins>
 ### Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 
@@ -34,6 +35,8 @@ Delay, before every action, adjusted for the average computer.
   
     `keyboard` (keystroke injection)  
     `clipboard` (clipboard access)  
+    `langid` (english IMDb title validation)  
+    `beautifulsoup4` (english IMDb title fetch)  
     `requests` (http requests)  
     `pywin32` (window events)  
     `qbittorrent-api` (qbittorrent WebUI remote interraction)  
@@ -53,7 +56,7 @@ Delay, before every action, adjusted for the average computer.
 ### Installation
 - In a terminal type:
   ```
-  pyinstaller --onefile --icon=.\icon\Movies.ico --paths=<DriveLetter>:\<PythonDir>\Lib\site-packages .\Snowfl-S4F.py -y
+  pyinstaller --onefile --icon=Movies.ico --paths=<DriveLetter>:\<PythonDir>\Lib\site-packages .\Snowfl-S4F.py -y
   ```
   - `pyinstaller`: Python library used to convert _.py_ to _.exe_ files.
   - `--onefile`: Keep all script's libraries inside the exe.
