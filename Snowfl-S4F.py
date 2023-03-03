@@ -300,8 +300,10 @@ def watchlist_part1(watchlist_url):
                     in_once = 0
                 
                 movieTitle = get_eng_title(row[1]) # Convert title to english
-                if movieTitle != row[5]:
+                if movieTitle.lower() != row[5].lower():
                     print(f'"{row[5]}" --> "{movieTitle}"')
+                else:
+                    movieTitle = row[5]
             
             movieList.append(movieTitle + " " + row[-5])
             ratingList.append(row[8] + "/10  --  " + time_duration + "  --  "  + row[-4])
@@ -330,7 +332,7 @@ def watchlist_part2(i):
         elif int(watchlistSelection) == 0:
             os.system("cls")
             return "back"
-        elif 0 > int(watchlistSelection) > i:
+        elif not 0 <= int(watchlistSelection) <= i:
             os.system("cls")
             wrong_input_box("Wrong number pressed")
         else:
@@ -342,13 +344,10 @@ movieList = []
 ratingList = []
 day_monthList = []
 
-while 1:
-    if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
-        or not (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
-            if not ping_req("google.com"): # Check internet connection
-                press_any_key("No internet connection . . .", "retry")
-    else:
-        break
+if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
+    or not (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
+        while not ping_req("google.com"): # Check internet connection
+            press_any_key("No internet connection . . .", "retry")
 
 if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     print("""No Bittorrent client installed . . .
