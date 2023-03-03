@@ -79,10 +79,9 @@ def save_add_magnet_link(): # Save magnet link
                     close_tab(0.1) # Close browser tab
                 if config["torrent"]["auto_launch_client"]:
                     os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
-    else:
-        os.system("cls")
-        change_win(0)
-        press_any_key(f'No "{keyword}" torrents found . . .', "exit")
+    else: # In case of snowfl.com search delay, retry
+        time.sleep(0.5)
+        save_add_magnet_link()
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -148,7 +147,7 @@ def qbittorrent_webui_actions():
                         torrents = qbt_client.torrents_info() # Get torrents list
 
                         for t in torrents:
-                            if t.state == "stalledUP":
+                            if t.state not in ["stalledUP", "uploading"]:
                                 if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
                                     t.delete(t.hash) # Delete torrent
 
@@ -343,6 +342,7 @@ config = read_config("config.json") # Collection of config options included in t
 movieList = []
 ratingList = []
 day_monthList = []
+clipboard.copy("") # Clear recently copied text, in case it starts with "http" or "magnet"
 
 if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
     or not (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
