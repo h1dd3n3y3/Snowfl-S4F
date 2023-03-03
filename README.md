@@ -20,7 +20,8 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - Firefox
 - Opera
 
-Delay, before every action, adjusted for the average computer.
+Delay, before every action, adjusted for the average computer.  
+Some misfunctionalities are expected for the time being.
 ## <ins>Ready Release</ins>
 ### Grab the latest one from [**_RELEASES_**](https://github.com/tru3w1tn3ss/Snowfl-S4F/releases).  
 
