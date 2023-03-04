@@ -419,13 +419,13 @@ while 1:
 
                 choice = movie_opt() # Show main menu
         elif choice in  ['2', '3']:
-            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 2) # Subtitles Search (2 button pressed)
+            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 0 if choice == '2' else 2) # Subtitles Search (2 button pressed)
 
             if choice == '3': # Movie & Subtitles Search (3 button pressed)
                 open_in_browser("https://snowfl.com", 2)
 
                 for i in range(2):
-                    change_win(0.2)
+                    change_win(0.5)
                 
                 type_sortBySeed_go(keyword, 3)
                 find_in_browser("1080p")
