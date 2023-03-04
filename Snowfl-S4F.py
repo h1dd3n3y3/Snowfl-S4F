@@ -162,7 +162,7 @@ def qbittorrent_webui_actions():
                             else:
                                 break # Request agian for torrent info, taking into consideration only the 1st from the list
                         else:
-                            print("No active torrents")
+                            press_any_key("No active torrents", exit)
                             break
 
                         time.sleep(5)
