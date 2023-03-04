@@ -2,7 +2,7 @@
 Python application for torrent & subtitle movie browsing, using keystroke injection.  
 ## <ins>**!! DISCLAIMER !!**</ins>
 - **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions.
-- **_ONLY_** for <ins>**supported**</ins> browsers.  
+- **_ONLY_** for [<ins>**supported browsers**</ins>](https://github.com/h1dd3n3y3/Snowfl-S4F#browser-support).  
 - A <ins>**Bittorrent client**</ins> is <ins>**required**</ins> _(duh...)_: [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, but everything else is fine _(€$£)_.
 
 ### If this _LAZY_ _BODGE_ works, then it provides:  
