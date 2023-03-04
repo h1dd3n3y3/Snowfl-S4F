@@ -65,7 +65,7 @@ def save_add_magnet_link(): # Save magnet link
     copy_link_to_clip(0.1)
     link = clipboard.paste()
 
-    if link.startswith("http") or link.startswith("magnet"):
+    if link != " ": # Clipboard empty
         if not link.startswith("magnet"):
             if link.endswith("/#fetch"):
                 find_in_browser("next")
@@ -80,8 +80,8 @@ def save_add_magnet_link(): # Save magnet link
                 if config["torrent"]["auto_launch_client"]:
                     os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
     else: # In case of snowfl.com search delay, retry
-        time.sleep(0.5)
-        save_add_magnet_link()
+        os.system("cls")
+        press_any_key("Snowfl didn't load on time", "continue the program execution")
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -147,7 +147,7 @@ def qbittorrent_webui_actions():
                         torrents = qbt_client.torrents_info() # Get torrents list
 
                         for t in torrents:
-                            if t.state not in ["stalledUP", "uploading"]:
+                            if t.state in ["stalledUP", "uploading"]:
                                 if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
                                     t.delete(t.hash) # Delete torrent
 
@@ -256,7 +256,7 @@ def watchlist_part1(watchlist_url):
     # watchlist download
     try:
         os.system("cls")
-        print("Getting IMDb watchlist . . .")
+        print("Fetching IMDb watchlist . . .")
         response = requests.get(watchlist_url)
     except:
         return False
@@ -295,7 +295,7 @@ def watchlist_part1(watchlist_url):
             if not check_eng_title(movieTitle): # Check if title is english
                 if in_once:
                     os.system("cls")
-                    print(f'Translating non-english watchlist titles . . .')
+                    print(f'Translating non-english titles . . .')
                     in_once = 0
                 
                 movieTitle = get_eng_title(row[1]) # Convert title to english
@@ -327,22 +327,22 @@ def watchlist_part2(i):
         if watchlistSelection == "":
             os.system("cls")
             wrong_input_box(" No movie selected  ")
-            
-        elif int(watchlistSelection) == 0:
+        elif int(watchlistSelection) == 0: # Re-enter movie keywords
             os.system("cls")
             return "back"
-        elif not 0 <= int(watchlistSelection) <= i:
+        elif not 0 <= int(watchlistSelection) <= i: # Number out of range
             os.system("cls")
             wrong_input_box("Wrong number pressed")
         else:
             return movieList[int(watchlistSelection) - 1]
 
 #? <======================= MAIN APP =======================>
+
 config = read_config("config.json") # Collection of config options included in the config.json file
 movieList = []
 ratingList = []
 day_monthList = []
-clipboard.copy("") # Clear recently copied text, in case it starts with "http" or "magnet"
+clipboard.copy(" ") # Clear recently copied text, in case it starts with "http" or "magnet"
 
 if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
     or not (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
@@ -360,6 +360,7 @@ if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
 browser = get_default_browser()
 
 #* <======================= MAIN LOOP =======================>
+
 while 1:
     os.system("cls")
 
@@ -395,54 +396,49 @@ while 1:
         choice = movie_opt() # Show main menu
 
     #! <======================= CHOICE LOOP =======================>
+
     while 1:
-        if choice == '1': # Movie Search (1 button pressed)
+        if choice in ['1', ' ']:
             open_in_browser("https://snowfl.com", 4)
             type_sortBySeed_go(keyword, 3)
             find_in_browser("1080p")
 
-            if config != None and config["torrent"]["auto_select"]:
-                manget_link = save_add_magnet_link()
-            
-            qbittorrent_webui_actions()
+            if choice == '1': # Movie Search (1 button pressed)
+                if config != None and config["torrent"]["auto_select"]:
+                    manget_link = save_add_magnet_link()
+                
+                qbittorrent_webui_actions()
 
-            raise SystemExit(0)
-        elif choice == '2': # Subtitles Search (2 button pressed)
-            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 0)
+                raise SystemExit(0)
+            elif choice == ' ': # Testing if movie torrnet exists (space button pressed)
+                change_win(0.1)
+                keyword = input("Movie keywords (Press enter to skip to search options):\n")
 
-            raise SystemExit(0)
-        elif choice == '3': # Movie & Subtitles Search (3 button pressed)
-            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 2)
-            open_in_browser("https://snowfl.com", 2)
+                if not keyword: # Empty new keyword (pressed enter)
+                    keyword = temp
 
-            for i in range(2):
-                change_win(0.2)
-            
-            type_sortBySeed_go(keyword, 3)
-            find_in_browser("1080p")
+                choice = movie_opt() # Show main menu
+        elif choice in  ['2', '3']:
+            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 2) # Subtitles Search (2 button pressed)
 
-            if config != None and config["torrent"]["auto_select"]:
-                magnet_link = save_add_magnet_link()
+            if choice == '3': # Movie & Subtitles Search (3 button pressed)
+                open_in_browser("https://snowfl.com", 2)
 
-            qbittorrent_webui_actions()
+                for i in range(2):
+                    change_win(0.2)
+                
+                type_sortBySeed_go(keyword, 3)
+                find_in_browser("1080p")
+
+                if config != None and config["torrent"]["auto_select"]:
+                    magnet_link = save_add_magnet_link()
+
+                qbittorrent_webui_actions()
 
             raise SystemExit(0)
         elif choice == '0': # Go back to keyword input (0 button pressed)
             os.system("cls")
             break
-        elif choice == ' ': # Testing if movie torrnet exists (space button pressed)
-            os.system("cls")
-            temp = keyword
-            open_in_browser("https://snowfl.com", 4)
-            type_sortBySeed_go(keyword, 3)
-            find_in_browser("1080p")
-            change_win(0.1)
-            keyword = input("Movie keywords (Press enter to skip to search options):\n")
-
-            if not keyword: # Empty new keyword (pressed enter)
-                keyword = temp
-
-            choice = movie_opt() # Show main menu
         elif choice.encode(encoding = "UTF-8") == b'\x1b': # Exit (escape key pressed)
             raise SystemExit(0)
         else:
