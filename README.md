@@ -62,7 +62,7 @@ Malfunctions are expected, 30% of the time.
   - `--onefile`: Keep all script's libraries inside the exe.
   - `--icon`: Optionally give a custom app icon, followed by it's path (.ico file).
   - `--paths`: There's a chance it might be necessary to point pyinstaller to the python libraries folder.
-  - `.\Snowfl-S4F`: The python script itself.
+  - `.\Snowfl-S4Fpy`: The python script itself.
   - `-y`: Consent to every prompt pyinstaller might ask.
 ## _Optional goodies_
 ## <ins>IMDb Watchlist integration</ins>
