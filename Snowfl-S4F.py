@@ -4,25 +4,25 @@ import requests, qbittorrentapi, langid         # 3rd-party libraries
 import csv, json, configparser                  #
 import win32gui, win32con, keyboard, clipboard  #
 
-def press_any_key(msg, prmt_msg):
+def press_any_key(msg, prmt_msg): # Custom "pause" message
     print(f"""{msg}
         \rPress any key to {prmt_msg} . . .""")
     os.system("pause >nul")
 
-def wrong_input_box(msg):
+def wrong_input_box(msg): # Wrong input box dialogue
     print(f"""+--------------------------+
         \r|!! {msg} !!|
         \r|---> Please try again <---|
         \r+--------------------------+\n""")
 
-def close_tab(delay):
+def close_tab(delay): # Close tab shortcut
     keyboard.press_and_release("ctrl+w")
     time.sleep(delay)
 
-def change_win(delay=0, option=None):
+def change_win(delay=0, option=None): # Change window shortcut
     if option == None:
         keyboard.press_and_release("alt+tab")
-    elif option == "next":    
+    elif option == "next": # Focus on the 2nd window in row (the app itself)
         keyboard.press("alt")
         
         for i in range(2):
@@ -33,7 +33,7 @@ def change_win(delay=0, option=None):
     
     time.sleep(delay)
 
-def ping_req(hostname):
+def ping_req(hostname): # Ping requests
     if hostname == "google.com":
         os.system("cls")
         print("Checking internet access . . .")
@@ -45,7 +45,7 @@ def ping_req(hostname):
     except:
         return False
 
-def find_in_browser(keyword):
+def find_in_browser(keyword): # Find in browser shortcut
     keyboard.press_and_release("ctrl+f")
     time.sleep(0.1)
 
@@ -86,7 +86,7 @@ def save_add_magnet_link(): # Save magnet link
             \rYou'll have to choose the torrent yourself . . .""", "continue the program execution")
         change_win()
 
-def copy_link_to_clip(delay): # Save url link
+def copy_link_to_clip(delay): # Copy url link to clipboard
     keyboard.press_and_release("shift+f10")
     time.sleep(0.1)
 
@@ -115,7 +115,7 @@ def get_default_browser(): # Get default browser from Windows Registry
     except WindowsError:
         return "Unknown"
 
-def get_default_bittorrent_client_path():
+def get_default_bittorrent_client_path(): # Get default bittorrent client path
     try:
         with winreg.OpenKey(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\Magnet\shell\open\command") as key:
             bittorrent_client = winreg.QueryValue(key, None)
@@ -127,7 +127,7 @@ def get_default_bittorrent_client_path():
     except WindowsError:
         return "Unknown"
 
-def qbittorrent_webui_actions():
+def qbittorrent_webui_actions(): # qBittorrent monitoring
     name, ext = os.path.splitext(os.path.basename(get_default_bittorrent_client_path())) # Save bittorrent client name
 
     if name == "qbittorrent":
@@ -183,29 +183,29 @@ def qbittorrent_webui_actions():
             change_win("next")
             press_any_key("qBittorrent WebUI not enabled . . .", "exit")
 
-def close_bittorrent_on_finish(bittorrent_client_path):
+def close_bittorrent_on_finish(bittorrent_client_path): # Close bittorrent client on torrent download finish
     name, ext = os.path.splitext(os.path.basename(bittorrent_client_path))
 
-    def find_torrent_window(hwnd, _):
+    def find_torrent_window(hwnd, _): # Find bittorrent client window process
         window_title = win32gui.GetWindowText(hwnd)
 
         if window_title.lower().startswith(name.lower()):
-            win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0)
+            win32gui.PostMessage(hwnd, win32con.WM_CLOSE, 0, 0) # Send "window close" signal
 
     win32gui.EnumWindows(find_torrent_window, None)
 
-def download_qbittorrent():
+def download_qbittorrent(): # Download qBittorrent
     open_in_browser("https://www.fosshub.com/qBittorrent.html", 4)
     find_in_browser("qBittorrent Windows x64")
     keyboard.press_and_release("esc")
     keyboard.press_and_release("enter")
     close_tab(0)
 
-def open_in_browser(url, delay):
+def open_in_browser(url, delay): # Open url in browser
     webbrowser.open(url)
     time.sleep(delay)
 
-def type_sortBySeed_go(keyword, delay):
+def type_sortBySeed_go(keyword, delay): # Type, sort by seed & search on snowfl.com
     keyboard.write(keyword)
 
     for i in range(2):
@@ -215,7 +215,7 @@ def type_sortBySeed_go(keyword, delay):
     keyboard.press_and_release("enter")
     time.sleep(delay)
 
-def read_config(filename):
+def read_config(filename): # Read config.json preferances
     try:
         with open(filename, "r") as f:
             config = json.load(f)
@@ -224,12 +224,15 @@ def read_config(filename):
 
     return config
 
-def movie_opt():
+def movie_opt(): # Get movie search option from user
+    imdb_search = "\n4. Open on IMDb." if keyword in movieList else ""
+
     print(f'''Select search option for "{keyword}":\n
         \r1. Movie.
         \r2. Subtitles.
-        \r3. Movie & Subtitles.
-        \r0. Re-enter movie keywords.\n
+        \r3. Movie & Subtitles.'''
+        + imdb_search +
+        '''\n0. Re-enter movie keywords.\n
         \rSpace. Check if torrent available.
         \rEsc. Exit.
         \r----------------------------------
@@ -237,7 +240,7 @@ def movie_opt():
 
     return str(msvcrt.getch().decode("utf-8")) # Get pressed button
 
-def check_eng_title(title):
+def check_eng_title(title): # Check if IMDb watchlist.csv title is enlish
     lang, prop = langid.classify(title)
 
     if lang == "en":
@@ -245,7 +248,7 @@ def check_eng_title(title):
     else:
         return False
 
-def get_eng_title(link):
+def get_eng_title(link): # Get IMDb english title from link
     headers = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
 
     response = requests.get(f"https://www.imdb.com/title/{link}", headers=headers)
@@ -254,18 +257,19 @@ def get_eng_title(link):
 
     return movie_title
 
-def watchlist_part1(watchlist_url):
+def watchlist_part1(watchlist_url): # Watchlist backend
     i = 0;
 
-    # watchlist download
-    try:
+    try: # Get watchlist request
         os.system("cls")
         print("Fetching IMDb watchlist . . .")
         response = requests.get(watchlist_url)
     except:
         return False
-    open("./init_watchlist.csv", "wb").write(response.content)
 
+    with open("./init_watchlist.csv", "wb") as init_watch: # Now save the request as a file
+        init_watch.write(response.content)
+    
     try:
         with open("./init_watchlist.csv", 'r') as f_old:
             with open("./watchlist.csv", 'w') as f_new:
@@ -285,9 +289,9 @@ def watchlist_part1(watchlist_url):
         if row[8] != "": # Exclude non-released movies
             i += 1
 
-            m_duration = int(row[-6]) % 60
-            h_duration_even = int(row[-6]) - m_duration
-            h_duration = int(int(h_duration_even) / 60)
+            m_duration = int(row[-6]) % 60              #
+            h_duration_even = int(row[-6]) - m_duration # Get time duration
+            h_duration = int(int(h_duration_even) / 60) #
             
             if m_duration == 0:
                 time_duration = str(h_duration) + "h"
@@ -299,7 +303,7 @@ def watchlist_part1(watchlist_url):
             if not check_eng_title(movieTitle): # Check if title is english
                 if in_once:
                     os.system("cls")
-                    print(f'Translating non-english titles . . .')
+                    print("Translating non-english titles . . .")
                     in_once = 0
                 
                 movieTitle = get_eng_title(row[1]) # Convert title to english
@@ -308,27 +312,28 @@ def watchlist_part1(watchlist_url):
                 else:
                     movieTitle = row[5]
             
-            movieList.append(movieTitle + " " + row[-5])
-            ratingList.append(row[8] + "/10  --  " + time_duration + "  --  "  + row[-4])
-            day_monthList.append(datetime.datetime.strptime(row[-2], "%Y-%m-%d").strftime("%d-%b-%Y")[0:6])
+            movieList.append(f"{movieTitle} {row[-5]}") # Save movie & year
+            imdbLinkList.append(f"https://www.imdb.com/title/{row[1]}")
+            ratingList.append(f"{row[8]}/10 -- {time_duration} -- {row[-4]}")
+            dayMonthList.append(datetime.datetime.strptime(row[-2], "%Y-%m-%d").strftime("%d-%b-%Y")[0:6])
 
     f.close()
-    movieList.reverse()
-    ratingList.reverse()
-    day_monthList.reverse()
 
-    return i
+    for list in movieList, imdbLinkList, ratingList, dayMonthList:
+        list.reverse()
 
-def watchlist_part2(i):
+    return i # Get total movie number
+
+def watchlist_part2(i): # Watchlist frontend
     while 1:
         for a in range(i):
-            print(str(a + 1) + ". " + movieList[a] + " (" + day_monthList[a] + ")  --  " + ratingList[a])
+            print(f"{a+1}. {movieList[a]} ({dayMonthList[a]}) -- {ratingList[a]}")
         
         print("""\n0. Jump back to enter movie keywords.
             \r---------------------------------------\n""")
-        watchlistSelection = (input("Choose a movie number (1-" + str(i) + "): "))
+        watchlistSelection = (input(f"Choose a movie number (1-{i}): "))
 
-        if watchlistSelection == "":
+        if not watchlistSelection:
             os.system("cls")
             wrong_input_box(" No movie selected  ")
         elif int(watchlistSelection) == 0: # Re-enter movie keywords
@@ -338,14 +343,15 @@ def watchlist_part2(i):
             os.system("cls")
             wrong_input_box("Wrong number pressed")
         else:
-            return movieList[int(watchlistSelection) - 1]
+            return movieList[int(watchlistSelection) - 1] # Get movie & year
 
-#? <======================= MAIN APP =======================>
+#? <=========================== MAIN APP ==========================>
 
 config = read_config("config.json") # Collection of config options included in the config.json file
 movieList = []
+imdbLinkList = []
 ratingList = []
-day_monthList = []
+dayMonthList = []
 clipboard.copy(" ") # Clear recently copied text, in case it starts with "http" or "magnet"
 
 if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
@@ -363,7 +369,7 @@ if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
 
 browser = get_default_browser()
 
-#* <======================= MAIN LOOP =======================>
+#* <========================== MAIN LOOP ==========================>
 
 while 1:
     os.system("cls")
@@ -422,8 +428,12 @@ while 1:
                     keyword = temp
 
                 choice = movie_opt() # Show main menu
-        elif choice in  ['2', '3']:
-            open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}&searchType=1", 0 if choice == '2' else 2) # Subtitles Search (2 button pressed)
+        elif choice in  ['2', '3', '4']:
+            if choice in ['2', '3']:
+                open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}\
+                    &searchType=1", 0 if choice == '2' else 2) # Subtitles Search (2 button pressed)
+            else:
+                open_in_browser(imdbLinkList[movieList.index(keyword)], 0)
 
             if choice == '3': # Movie & Subtitles Search (3 button pressed)
                 open_in_browser("https://snowfl.com", 2)
