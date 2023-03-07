@@ -1,4 +1,7 @@
+# All
 *
+
+# Except
 !.gitignore
 !README.md
 !requirements.txt
