@@ -81,7 +81,7 @@ Malfunctions are expected, 30% of the time.
 ### <ins>JSON Mapping</ins>
 - #### For everyone:
   - <ins>**IMDb Watchlist:**</ins> `IMDb_watchlist_export_link` to export link **_(ending with "/export")_**.
-  - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 will be ignored)_**.
+  - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 & 4 will be ignored)_**.
   - <ins>**Auto torrent selection:**</ins> `auto_select` to `true/false`.
   - <ins>**Auto close browser tab**</ins>, after auto torrent selection: `close_tab_after_torrent_add` to `true/false`.
   - <ins>**Open Bittorrent client**</ins>, (just in case it won't launch automatically): `auto_launch_client` to `true/false`.
