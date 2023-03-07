@@ -19,7 +19,7 @@ def close_tab(delay):
     keyboard.press_and_release("ctrl+w")
     time.sleep(delay)
 
-def change_win(delay, option = None):
+def change_win(delay=0, option=None):
     if option == None:
         keyboard.press_and_release("alt+tab")
     elif option == "next":    
@@ -81,7 +81,10 @@ def save_add_magnet_link(): # Save magnet link
                     os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
     else: # In case of snowfl.com search delay, retry
         os.system("cls")
-        press_any_key("Snowfl didn't load on time", "continue the program execution")
+        change_win()
+        press_any_key("""Snowfl didn't load on time . . .
+            \rYou'll have to choose the torrent yourself . . .""", "continue the program execution")
+        change_win()
 
 def copy_link_to_clip(delay): # Save url link
     keyboard.press_and_release("shift+f10")
@@ -162,21 +165,22 @@ def qbittorrent_webui_actions():
                             else:
                                 break # Request agian for torrent info, taking into consideration only the 1st from the list
                         else:
-                            press_any_key("No active torrents", exit)
+                            os.system("cls")
+                            press_any_key("No active torrents", "exit")
                             break
 
                         time.sleep(5)
                 else:
                     os.system("cls")
-                    change_win(0, "next")
+                    change_win("next")
                     press_any_key("Failed to authenticate with qBittorrent WebUI . . .", "exit")
             else:
                 os.system("cls")
-                change_win(0, "next")
+                change_win("next")
                 press_any_key("localhost authentication bypass is disabled . . .", "exit")
         else:
             os.system("cls")
-            change_win(0, "next")
+            change_win("next")
             press_any_key("qBittorrent WebUI not enabled . . .", "exit")
 
 def close_bittorrent_on_finish(bittorrent_client_path):
@@ -245,8 +249,8 @@ def get_eng_title(link):
     headers = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
 
     response = requests.get(f"https://www.imdb.com/title/{link}", headers=headers)
-    soup = BeautifulSoup(response.content, "html.parser")
-    movie_title = soup.find("h1").text
+    html = BeautifulSoup(response.content, "html.parser")
+    movie_title = html.find("h1").text
 
     return movie_title
 

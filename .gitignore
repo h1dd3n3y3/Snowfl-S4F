@@ -1,9 +1,6 @@
-__pycache__
-.vscode
-build
-dist
-old
-img
-*.spec
-*.csv
-testing.py
+*
+!.gitignore
+!README.md
+!requirements.txt
+!Snowfl-S4F.py
+!config.json
