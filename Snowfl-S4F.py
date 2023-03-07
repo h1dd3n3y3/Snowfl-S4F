@@ -226,7 +226,7 @@ def read_config(filename): # Read config.json preferances
 
 def movie_opt(): # Get movie search option from user
     imdb_search = "\n4. Open on IMDb." if keyword in movieList else ""
-
+    os.system("cls")
     print(f'''Select search option for "{keyword}":\n
         \r1. Movie.
         \r2. Subtitles.
@@ -399,10 +399,8 @@ while 1:
         if config["browser"]["default_search_action"] in range(1, 4): # If default search action not between 1-3
             choice = str(config["browser"]["default_search_action"])
         else:
-            os.system("cls")
             choice = movie_opt() # Show main menu
     else: # If config file is not present
-        os.system("cls")
         choice = movie_opt() # Show main menu
 
     #! <======================= CHOICE LOOP =======================>
@@ -420,8 +418,10 @@ while 1:
                 qbittorrent_webui_actions()
 
                 raise SystemExit(0)
-            elif choice == ' ': # Testing if movie torrnet exists (space button pressed)
+            else: # Testing if movie torrnet exists (space button pressed)
+                os.system("cls")
                 change_win(0.1)
+                temp = keyword
                 keyword = input("Movie keywords (Press enter to skip to search options):\n")
 
                 if not keyword: # Empty new keyword (pressed enter)
@@ -432,30 +432,29 @@ while 1:
             if choice in ['2', '3']:
                 open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}\
                     &searchType=1", 0 if choice == '2' else 2) # Subtitles Search (2 button pressed)
-            else:
+
+                if choice == '3': # Movie & Subtitles Search (3 button pressed)
+                    open_in_browser("https://snowfl.com", 2)
+
+                    for i in range(2):
+                        change_win(0.5)
+                    
+                    type_sortBySeed_go(keyword, 3)
+                    find_in_browser("1080p")
+
+                    if config != None and config["torrent"]["auto_select"]:
+                        magnet_link = save_add_magnet_link()
+
+                    qbittorrent_webui_actions()
+
+                raise SystemExit(0)    
+            else: # IMDb search (4 button pressed)
                 open_in_browser(imdbLinkList[movieList.index(keyword)], 0)
-
-            if choice == '3': # Movie & Subtitles Search (3 button pressed)
-                open_in_browser("https://snowfl.com", 2)
-
-                for i in range(2):
-                    change_win(0.5)
-                
-                type_sortBySeed_go(keyword, 3)
-                find_in_browser("1080p")
-
-                if config != None and config["torrent"]["auto_select"]:
-                    magnet_link = save_add_magnet_link()
-
-                qbittorrent_webui_actions()
-
-            raise SystemExit(0)
+                choice = movie_opt() # Show main menu
         elif choice == '0': # Go back to keyword input (0 button pressed)
-            os.system("cls")
             break
         elif choice.encode(encoding = "UTF-8") == b'\x1b': # Exit (escape key pressed)
             raise SystemExit(0)
         else:
-            os.system("cls")
             wrong_input_box("Wrong button pressed")
             choice = movie_opt() # Show main menu
