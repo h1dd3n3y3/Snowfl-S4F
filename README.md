@@ -5,7 +5,7 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - **_ONLY_** for [<ins>**_supported browsers_**</ins>](https://github.com/h1dd3n3y3/Snowfl-S4F#browser-support).  
 - A <ins>**_Bittorrent client_**</ins> is <ins>**_required_**</ins> _(duh...)_: [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, as more feature-focused, but everything else is fine _(€$£)_.
 
-### If this _LAZY BODGE_ works, it provides:  
+### If this _LAZY WORKAROUND_ works, it provides:  
 - Publicly available torrent browser
 - Find-in-page 1080p torrents
 - Automatic torrent downlaod _(optionally)_
@@ -81,7 +81,7 @@ Malfunctions are expected, 30% of the time.
 ### <ins>JSON Mapping</ins>
 - #### For everyone:
   - <ins>**IMDb Watchlist:**</ins> `IMDb_watchlist_export_link` to export link **_(ending with "/export")_**.
-  - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 will be ignored)_**.
+  - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 & 4 will be ignored)_**.
   - <ins>**Auto torrent selection:**</ins> `auto_select` to `true/false`.
   - <ins>**Auto close browser tab**</ins>, after auto torrent selection: `close_tab_after_torrent_add` to `true/false`.
   - <ins>**Open Bittorrent client**</ins>, (just in case it won't launch automatically): `auto_launch_client` to `true/false`.
