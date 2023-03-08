@@ -15,7 +15,7 @@ def wrong_input_box(msg): # Wrong input box dialogue
         \r|---> Please try again <---|
         \r+--------------------------+\n""")
 
-def close_tab(delay): # Close tab shortcut
+def close_tab(delay=0): # Close tab shortcut
     keyboard.press_and_release("ctrl+w")
     time.sleep(delay)
 
@@ -199,9 +199,9 @@ def download_qbittorrent(): # Download qBittorrent
     find_in_browser("qBittorrent Windows x64")
     keyboard.press_and_release("esc")
     keyboard.press_and_release("enter")
-    close_tab(0)
+    close_tab()
 
-def open_in_browser(url, delay): # Open url in browser
+def open_in_browser(url, delay=0): # Open url in browser
     webbrowser.open(url)
     time.sleep(delay)
 
@@ -365,7 +365,7 @@ if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     if msvcrt.getch().decode("utf-8") == 'y':
         download_qbittorrent()
     else:
-        raise SystemExit(0)
+        exit(0)
 
 browser = get_default_browser()
 
@@ -417,7 +417,7 @@ while 1:
                 
                 qbittorrent_webui_actions()
 
-                raise SystemExit(0)
+                exit(0)
             else: # Testing if movie torrnet exists (space button pressed)
                 os.system("cls")
                 change_win(0.1)
@@ -431,7 +431,7 @@ while 1:
         elif choice in  ['2', '3', '4']:
             if choice in ['2', '3']:
                 open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}\
-                    &searchType=1", 0 if choice == '2' else 2) # Subtitles Search (2 button pressed)
+                    &searchType=1", 2 if choice == '2' else 0) # Subtitles Search (2 button pressed)
 
                 if choice == '3': # Movie & Subtitles Search (3 button pressed)
                     open_in_browser("https://snowfl.com", 2)
@@ -447,14 +447,14 @@ while 1:
 
                     qbittorrent_webui_actions()
 
-                raise SystemExit(0)    
+                exit(0)    
             else: # IMDb search (4 button pressed)
-                open_in_browser(imdbLinkList[movieList.index(keyword)], 0)
+                open_in_browser(imdbLinkList[movieList.index(keyword)])
                 choice = movie_opt() # Show main menu
         elif choice == '0': # Go back to keyword input (0 button pressed)
             break
         elif choice.encode(encoding = "UTF-8") == b'\x1b': # Exit (escape key pressed)
-            raise SystemExit(0)
+            exit(0)
         else:
             wrong_input_box("Wrong button pressed")
             choice = movie_opt() # Show main menu
