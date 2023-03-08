@@ -431,7 +431,7 @@ while 1:
         elif choice in  ['2', '3', '4']:
             if choice in ['2', '3']:
                 open_in_browser(f"https://www.subs4free.club/search_report.php?search={keyword}\
-                    &searchType=1", 2 if choice == '2' else 0) # Subtitles Search (2 button pressed)
+                    &searchType=1", 0 if choice == '2' else 2) # Subtitles Search (2 button pressed)
 
                 if choice == '3': # Movie & Subtitles Search (3 button pressed)
                     open_in_browser("https://snowfl.com", 2)
