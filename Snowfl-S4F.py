@@ -65,26 +65,19 @@ def save_add_magnet_link(): # Save magnet link
     copy_link_to_clip(0.1)
     link = clipboard.paste()
 
-    if link != " ": # Clipboard empty
-        if not link.startswith("magnet"):
-            if link.endswith("/#fetch"):
-                find_in_browser("next")
-                
-            save_add_magnet_link()
-        else:
-            open_in_browser(link, 0.1)
+    if not link.startswith("magnet"):
+        if link.endswith("/#fetch"):
+            find_in_browser("next")
+            
+        save_add_magnet_link()
+    else:
+        open_in_browser(link, 0.1)
 
-            if config != None: # If config exists
-                if config["browser"]["close_tab_after_torrent_add"]:
-                    close_tab(0.1) # Close browser tab
-                if config["torrent"]["auto_launch_client"]:
-                    os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
-    else: # In case of snowfl.com search delay, retry
-        os.system("cls")
-        change_win()
-        press_any_key("""Snowfl didn't load on time . . .
-            \rYou'll have to choose the torrent yourself . . .""", "continue the program execution")
-        change_win()
+        if config != None: # If config exists
+            if config["browser"]["close_tab_after_torrent_add"]:
+                close_tab(0.1) # Close browser tab
+            if config["torrent"]["auto_launch_client"]:
+                os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
 
 def copy_link_to_clip(delay): # Copy url link to clipboard
     keyboard.press_and_release("shift+f10")
