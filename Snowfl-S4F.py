@@ -1,45 +1,39 @@
 import os, winreg, webbrowser, datetime, time, msvcrt # Built-in
-import win32api, win32gui, win32con, curses     #
-import requests, qbittorrentapi, langid         #
-import csv, json, configparser                  # 3rd-party
-from bs4 import BeautifulSoup                   #
-import keyboard, clipboard                      #
+import win32api, win32gui, win32con     #
+import requests, qbittorrentapi, langid #
+import csv, json, configparser          # 3rd-party
+from bs4 import BeautifulSoup           #
+import keyboard, clipboard              #
 
 def center_win():
-    # Get the handle to the console window
-    console_handle = win32gui.GetForegroundWindow()
+    if config != None and config["ui"]["window"]["centered"]:
+        console_handle = win32gui.GetForegroundWindow() # Get the handle to the console window
 
-    # Get the screen size
-    screen_width = win32api.GetSystemMetrics(0)
-    screen_height = win32api.GetSystemMetrics(1)
+        # Get the screen size
+        screen_width = win32api.GetSystemMetrics(0)
+        screen_height = win32api.GetSystemMetrics(1)
 
-    # Get the work area size, which excludes the taskbar
-    monitor_info = win32api.GetMonitorInfo(win32api.MonitorFromWindow(console_handle, win32con.MONITOR_DEFAULTTONEAREST))
-    work_area_rect = monitor_info.get("Work")
-    work_area_width = work_area_rect[2] - work_area_rect[0]
-    work_area_height = work_area_rect[3] - work_area_rect[1]
+        # Get the work area size, which excludes the taskbar
+        monitor_info = win32api.GetMonitorInfo(win32api.MonitorFromWindow(console_handle, win32con.MONITOR_DEFAULTTONEAREST))
+        work_area_rect = monitor_info.get("Work")
+        work_area_width = work_area_rect[2] - work_area_rect[0]
+        work_area_height = work_area_rect[3] - work_area_rect[1]
 
-    # Get the window size
-    window_rect = win32gui.GetWindowRect(console_handle)
-    window_width = window_rect[2] - window_rect[0]
-    window_height = window_rect[3] - window_rect[1]
+        # Get the window size
+        window_rect = win32gui.GetWindowRect(console_handle)
+        window_width = window_rect[2] - window_rect[0]
+        window_height = window_rect[3] - window_rect[1]
 
-    # Calculate the position to center the window on the screen, excluding the taskbar
-    pos_x = work_area_rect[0] + (work_area_width - window_width) // 2
-    pos_y = work_area_rect[1] + (work_area_height - window_height) // 2
+        # Calculate the position to center the window on the screen, excluding the taskbar
+        pos_x = work_area_rect[0] + (work_area_width - window_width) // 2
+        pos_y = work_area_rect[1] + (work_area_height - window_height) // 2\
+            - config["ui"]["window"]["bottom_offset"] # Adjust further bottom offset
 
-    # Move the window to the center of the screen, excluding the taskbar
-    win32gui.MoveWindow(console_handle, pos_x, pos_y, window_width, window_height, True)
+        # Move the window to the center of the screen (or relative, depending on the offset), excluding the taskbar
+        win32gui.MoveWindow(console_handle, pos_x, pos_y, window_width, window_height, True)
 
-def wrap_window_around_text(cols=None, rows=None):
-    curses.initscr()
-    if cols is not None and rows is not None:
-        curses.resize_term(rows, cols)
-    elif cols is not None:
-        curses.resize_term(curses.LINES, cols)
-    elif rows is not None:
-        curses.resize_term(rows, curses.COLS)
-    curses.endwin()
+def wrap_around_text(rows, cols): # Wrap window around text
+    os.system(f"mode con lines={rows} cols={cols}")
 
 def press_any_key(msg, prmt_msg): # Custom "pause" message
     print(f"""{msg}
@@ -47,6 +41,9 @@ def press_any_key(msg, prmt_msg): # Custom "pause" message
     os.system("pause >nul")
 
 def wrong_input_box(msg): # Wrong input box dialogue
+    if msg != "Wrong button pressed":
+        wrap_around_text(tot_mov + 10, len(max(movieDetails, key=len)))
+        
     print(f"""+--------------------------+
         \r|!! {msg} !!|
         \r|---> Please try again <---|
@@ -254,9 +251,12 @@ def read_config(filename): # Read config.json preferances
 
     return config
 
-def movie_opt(): # Get movie search option from user
+def movie_opt(error=None): # Get movie search option from user
     imdb_search = "\n4. Open on IMDb." if keyword in movieList else ""
-    os.system("cls")
+
+    if error != "retry":
+        os.system("cls")
+
     print(f'''Select search option for "{keyword}":\n
         \r1. Movie.
         \r2. Subtitles.
@@ -281,7 +281,11 @@ def check_eng_title(title): # Check if IMDb watchlist.csv title is enlish
 def get_eng_title(link): # Get IMDb english title from link
     headers = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
 
-    response = requests.get(f"https://www.imdb.com/title/{link}", headers=headers)
+    try:
+        response = requests.get(f"https://www.imdb.com/title/{link}", headers=headers)
+    except:
+        press_any_key("No internet connection . . .", "exit")
+
     html = BeautifulSoup(response.content, "html.parser")
     movie_title = html.find("h1").text
 
@@ -343,7 +347,7 @@ def watchlist_part1(watchlist_url): # Watchlist backend
                     movieTitle = row[5]
             
             movieList.append(f"{movieTitle} {row[-5]}") # Save movie & year
-            imdbLinkList.append(f"https://www.imdb.com/title/{row[1]}")
+            imdbLinkList.append(f"https://www.imdb.com/title/{row[1]}") # Save IMDb movie link
             ratingList.append(f"{row[8]}/10 ({time_duration}) -- {row[-4]}")
             dayMonthList.append(datetime.datetime.strptime(row[-2], "%Y-%m-%d").strftime("%d-%b-%Y")[0:6])
 
@@ -355,10 +359,16 @@ def watchlist_part1(watchlist_url): # Watchlist backend
     return i # Get total movie number
 
 def watchlist_part2(i): # Watchlist frontend
+    for a in range(i):
+        movieDetails.append(f"{a+1}. {movieList[a]} ({dayMonthList[a]}) -- {ratingList[a]}")
+
+    wrap_around_text(i + 5, len(max(movieDetails, key=len)))
+    center_win()
+
     while 1:
-        for a in range(i):
-            print(f"{a+1}. {movieList[a]} ({dayMonthList[a]}) -- {ratingList[a]}")
-        
+        for m in range(i):
+            print(movieDetails[m])
+
         print("""\n0. Jump back to enter movie keywords.
             \r---------------------------------------\n""")
         watchlistSelection = (input(f"Choose a movie number (1-{i}): "))
@@ -369,7 +379,7 @@ def watchlist_part2(i): # Watchlist frontend
         elif int(watchlistSelection) == 0: # Re-enter movie keywords
             os.system("cls")
             return "back"
-        elif not 0 <= int(watchlistSelection) <= i: # Number out of range
+        elif 0 > int(watchlistSelection) > i: # Number out of range
             os.system("cls")
             wrong_input_box("Wrong number pressed")
         else:
@@ -378,10 +388,12 @@ def watchlist_part2(i): # Watchlist frontend
 #? <=========================== MAIN APP ==========================>
 
 config = read_config("config.json") # Collection of config options included in the config.json file
+center_win() # Center terminal window
 movieList = []
 imdbLinkList = []
 ratingList = []
 dayMonthList = []
+movieDetails = []
 clipboard.copy(" ") # Clear recently copied text, in case it starts with "http" or "magnet"
 
 if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
@@ -486,5 +498,6 @@ while 1:
         elif choice.encode(encoding = "UTF-8") == b'\x1b': # Exit (escape key pressed)
             exit(0)
         else:
+            os.system("cls")
             wrong_input_box("Wrong button pressed")
-            choice = movie_opt() # Show main menu
+            choice = movie_opt("retry") # Show main menu

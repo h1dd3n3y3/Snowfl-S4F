@@ -1,6 +1,9 @@
 {
     "ui": {
-        "window_centered": false
+        "window": {
+            "centered": true,
+            "bottom_offset": 0
+        }
     },
     "browser": {
         "IMDb_watchlist_export_link": "",
