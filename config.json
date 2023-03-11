@@ -1,4 +1,7 @@
 {
+    "ui": {
+        "window_centered": false
+    },
     "browser": {
         "IMDb_watchlist_export_link": "",
         "default_search_action": 0,

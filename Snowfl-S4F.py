@@ -1,8 +1,45 @@
-import os, winreg, webbrowser, datetime, time, msvcrt # Built-in libraries
+import os, winreg, webbrowser, datetime, time, msvcrt # Built-in
+import win32api, win32gui, win32con, curses     #
+import requests, qbittorrentapi, langid         #
+import csv, json, configparser                  # 3rd-party
 from bs4 import BeautifulSoup                   #
-import requests, qbittorrentapi, langid         # 3rd-party libraries
-import csv, json, configparser                  #
-import win32gui, win32con, keyboard, clipboard  #
+import keyboard, clipboard                      #
+
+def center_win():
+    # Get the handle to the console window
+    console_handle = win32gui.GetForegroundWindow()
+
+    # Get the screen size
+    screen_width = win32api.GetSystemMetrics(0)
+    screen_height = win32api.GetSystemMetrics(1)
+
+    # Get the work area size, which excludes the taskbar
+    monitor_info = win32api.GetMonitorInfo(win32api.MonitorFromWindow(console_handle, win32con.MONITOR_DEFAULTTONEAREST))
+    work_area_rect = monitor_info.get("Work")
+    work_area_width = work_area_rect[2] - work_area_rect[0]
+    work_area_height = work_area_rect[3] - work_area_rect[1]
+
+    # Get the window size
+    window_rect = win32gui.GetWindowRect(console_handle)
+    window_width = window_rect[2] - window_rect[0]
+    window_height = window_rect[3] - window_rect[1]
+
+    # Calculate the position to center the window on the screen, excluding the taskbar
+    pos_x = work_area_rect[0] + (work_area_width - window_width) // 2
+    pos_y = work_area_rect[1] + (work_area_height - window_height) // 2
+
+    # Move the window to the center of the screen, excluding the taskbar
+    win32gui.MoveWindow(console_handle, pos_x, pos_y, window_width, window_height, True)
+
+def wrap_window_around_text(cols=None, rows=None):
+    curses.initscr()
+    if cols is not None and rows is not None:
+        curses.resize_term(rows, cols)
+    elif cols is not None:
+        curses.resize_term(curses.LINES, cols)
+    elif rows is not None:
+        curses.resize_term(rows, curses.COLS)
+    curses.endwin()
 
 def press_any_key(msg, prmt_msg): # Custom "pause" message
     print(f"""{msg}
@@ -286,10 +323,10 @@ def watchlist_part1(watchlist_url): # Watchlist backend
             h_duration_even = int(row[-6]) - m_duration # Get time duration
             h_duration = int(int(h_duration_even) / 60) #
             
-            if m_duration == 0:
-                time_duration = str(h_duration) + "h"
-            else:
-                time_duration = str(h_duration) + "h-" + str(m_duration) + "m"
+            time_duration = str(h_duration) + 'h'
+
+            if m_duration != 0:
+                time_duration += ' ' + str(m_duration) + 'm'
             
             movieTitle = row[5]
             
@@ -307,7 +344,7 @@ def watchlist_part1(watchlist_url): # Watchlist backend
             
             movieList.append(f"{movieTitle} {row[-5]}") # Save movie & year
             imdbLinkList.append(f"https://www.imdb.com/title/{row[1]}")
-            ratingList.append(f"{row[8]}/10 -- {time_duration} -- {row[-4]}")
+            ratingList.append(f"{row[8]}/10 ({time_duration}) -- {row[-4]}")
             dayMonthList.append(datetime.datetime.strptime(row[-2], "%Y-%m-%d").strftime("%d-%b-%Y")[0:6])
 
     f.close()
