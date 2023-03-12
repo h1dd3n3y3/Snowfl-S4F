@@ -1,9 +1,9 @@
-import os, winreg, webbrowser, datetime, time, msvcrt # Built-in
-import win32api, win32gui, win32con     #
-import requests, qbittorrentapi, langid #
-import csv, json, configparser          # 3rd-party
-from bs4 import BeautifulSoup           #
-import keyboard, clipboard              #
+import os, winreg, webbrowser, datetime, time, msvcrt, shutil # Built-in
+import win32api, win32gui, win32con      #
+import requests, qbittorrentapi, langid  #
+import csv, json, configparser           # 3rd-party
+from bs4 import BeautifulSoup            #
+import keyboard, clipboard               #
 
 def center_win():
     if config != None and config["ui"]["window"]["centered"]:
@@ -33,7 +33,12 @@ def center_win():
         win32gui.MoveWindow(console_handle, pos_x, pos_y, window_width, window_height, True)
 
 def wrap_around_text(rows, cols): # Wrap window around text
-    os.system(f"mode con lines={rows} cols={cols}")
+    size = shutil.get_terminal_size() # Get the current console window size
+
+    if size.columns > cols: cols = size.columns
+    if size.lines > rows: rows = size.lines
+
+    os.system(f"mode con cols={cols} lines={rows}")
 
 def press_any_key(msg, prmt_msg): # Custom "pause" message
     print(f"""{msg}
