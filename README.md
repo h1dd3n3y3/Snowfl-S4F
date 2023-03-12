@@ -10,7 +10,7 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 - Find-in-page 1080p torrents
 - Automatic torrent downlaod _(optionally)_
 - 90% Greek and 10% English subtitle content browser
-- Generic DNS workaround _(currently slower)_
+- Independent DNS support _(currently slower)_
 - [**_IMDb WATCHLIST_**](https://github.com/h1dd3n3y3/Snowfl-S4F#imdb-watchlist-integration) movie selection _(optionally)_
 - [**_qBittorrent torrent automation_**](https://github.com/h1dd3n3y3/Snowfl-S4F#qbittorrent-integration) _(optionally)_
 - [**_JSON Custom Configuration_**](https://github.com/h1dd3n3y3/Snowfl-S4F#custom-configuration-using-configjson-file) _(optionally)_  
@@ -80,6 +80,8 @@ Malfunctions are expected, 30% of the time.
 - ### <ins>Every value</ins> must be <ins>**_double quoted_**</ins> after each option name, <ins>except</ins> for those with <ins>**_boolean_**</ins> values (JSON Logic).
 ### <ins>JSON Mapping</ins>
 - #### For everyone:
+  - <ins>**Center app window:**</ins> `centered` to `true/false`.
+  - <ins>**Extra vertical window offset:**</ins> `bottom_offset` to any number you wish **_(inside your vertical resolution)_**.
   - <ins>**IMDb Watchlist:**</ins> `IMDb_watchlist_export_link` to export link **_(ending with "/export")_**.
   - <ins>**Default search action**</ins>, after movie title entry/selection: `default_search_action` between `1-3` **_(0 & 4 will be ignored)_**.
   - <ins>**Auto torrent selection:**</ins> `auto_select` to `true/false`.
