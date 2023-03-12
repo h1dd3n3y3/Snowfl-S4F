@@ -281,10 +281,7 @@ def movie_opt(error=None): # Get movie search option from user
 def check_eng_title(title): # Check if IMDb watchlist.csv title is enlish
     lang, prop = langid.classify(title)
 
-    if lang == "en":
-        return True
-    else:
-        return False
+    return True if lang == "en" else False
 
 def get_eng_title(link): # Get IMDb english title from link
     headers = {"User-Agent": "Mozilla/5.0", "Accept-Language": "en-US"}
