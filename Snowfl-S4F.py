@@ -35,6 +35,7 @@ def center_win():
 def wrap_around_text(rows, cols): # Wrap window around text
     size = shutil.get_terminal_size() # Get the current console window size
 
+    # Prevent excessively small resizing
     if size.columns > cols: cols = size.columns
     if size.lines > rows: rows = size.lines
 
@@ -122,10 +123,8 @@ def copy_link_to_clip(delay): # Copy url link to clipboard
     keyboard.press_and_release("shift+f10")
     time.sleep(0.1)
 
-    if browser == "chrome": # 'Shift + F10' shortcut and then 'E' key
-        keyboard.press_and_release("e")
-    elif browser == "firefox": # 'Shift + F10' shortcut and then 'L' key
-        keyboard.press_and_release("l")
+    if browser == "chrome": keyboard.press_and_release("e") # 'Shift + F10' shortcut and then 'E' key
+    elif browser == "firefox": keyboard.press_and_release("l") # 'Shift + F10' shortcut and then 'L' key
     elif browser == "Launcher": # Opera browser
         for i in range(5):
             keyboard.press_and_release("down")
@@ -143,7 +142,11 @@ def get_default_browser(): # Get default browser from Windows Registry
             browser_path, _ = winreg.QueryValueEx(key, "")
             default_browser = os.path.splitext(os.path.basename(browser_path))[0]
 
-        return default_browser
+        if default_browser in ['chrome', 'firefox', 'Launcher']:
+            return default_browser
+        else:
+            press_any_key(f'"{default_browser} not supported yet . . .', "continue")
+            return "unsupported"
     except WindowsError:
         return "Unknown"
 
@@ -414,7 +417,8 @@ if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     else:
         exit(0)
 
-browser = get_default_browser()
+if (browser := get_default_browser()) == "unsupported":
+    print("Browser", browser)
 
 #* <========================== MAIN LOOP ==========================>
 
