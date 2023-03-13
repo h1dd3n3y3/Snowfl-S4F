@@ -100,24 +100,25 @@ def find_in_browser(keyword): # Find in browser shortcut
     time.sleep(0.1)
 
 def save_add_magnet_link(): # Save magnet link
-    keyboard.press_and_release("tab")
-    time.sleep(0.1)
-    copy_link_to_clip(0.1)
-    link = clipboard.paste()
+    if config != None and (find_value := config["browser"]["find_in_page"]):
+        keyboard.press_and_release("tab")
+        time.sleep(0.1)
+        copy_link_to_clip(0.1)
+        link = clipboard.paste()
 
-    if not link.startswith("magnet"):
-        if link.endswith("/#fetch"):
-            find_in_browser("next")
-            
-        save_add_magnet_link()
-    else:
-        open_in_browser(link, 0.1)
+        if not link.startswith("magnet"):
+            if link.endswith("/#fetch"):
+                find_in_browser("next")
+                
+            save_add_magnet_link()
+        else:
+            open_in_browser(link, 0.1)
 
-        if config != None: # If config exists
-            if config["browser"]["close_tab_after_torrent_add"]:
-                close_tab(0.1) # Close browser tab
-            if config["torrent"]["auto_launch_client"]:
-                os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
+            if config != None: # If config exists
+                if config["browser"]["close_tab_after_torrent_add"]:
+                    close_tab(0.1) # Close browser tab
+                if config["torrent"]["auto_launch_client"]:
+                    os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
 
 def copy_link_to_clip(delay): # Copy url link to clipboard
     keyboard.press_and_release("shift+f10")
@@ -163,6 +164,7 @@ def get_default_bittorrent_client_path(): # Get default bittorrent client path
         return "Unknown"
 
 def qbittorrent_webui_actions(): # qBittorrent monitoring
+    cnt = 0
     name, ext = os.path.splitext(os.path.basename(get_default_bittorrent_client_path())) # Save bittorrent client name
 
     if name == "qbittorrent":
@@ -174,18 +176,11 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
         if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")): # Check qbtittorrent config & if WebUI is enabled
             if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")): # Check if localhost authentication bypass is enabled
                 if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in: # Check the login status
-                    os.system("cls")
-                    print("""Downloading torrent . . .\n
-                        \rqBittorrent is being currently monitored . . .
-                        \rThis window will stay open until the download is finished.
-                        \rIf you close it manually, any qbittorrent actions will be ignored.\n
-                        \rPlease wait patiently . . .""")
-
                     while 1:
-                        torrents = qbt_client.torrents_info() # Get torrents list
+                        torrents = qbt_client.torrents_info() # Get torrents list:
 
                         for t in torrents:
-                            if t.state in ["stalledUP", "uploading"]:
+                            if t.state in ["stalledUP", "uploading"]: # Finished downlaoding
                                 if config["torrent"]["qbittorrent"]["on_download"]["delete_torrent"]:
                                     t.delete(t.hash) # Delete torrent
 
@@ -198,11 +193,22 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
 
                                 return
                             else:
+                                os.system("cls")
+                                print("""Monitoring qBittorrent . . .\n
+                                    \rThis window will stay open until the download is finished.
+                                    \rIf you close it manually, any qbittorrent actions will be ignored.\n
+                                    \rPlease wait patiently . . .""")
                                 break # Request agian for torrent info, taking into consideration only the 1st from the list
                         else:
+                            cnt += 1
                             os.system("cls")
-                            press_any_key("No active torrents", "exit")
-                            break
+
+                            if cnt < 6: # Wait for 30 seconds
+                                print("No active torrents yet . . .")
+                                print("Listening . . .")
+                            else: # Break after timeout
+                                press_any_key("Timeout reached 30 seconds . . .", "exit")
+                                break
 
                         time.sleep(5)
                 else:
@@ -457,7 +463,9 @@ while 1:
         if choice in ['1', ' ']:
             open_in_browser("https://snowfl.com", 4)
             type_sortBySeed_go(keyword, 3)
-            find_in_browser("1080p")
+
+            if config != None and (find_value := config["browser"]["find_in_page"]):
+                find_in_browser(find_value)
 
             if choice == '1': # Movie Search (1 button pressed)
                 if config != None and config["torrent"]["auto_select"]:
@@ -488,7 +496,9 @@ while 1:
                         change_win(0.5)
                     
                     type_sortBySeed_go(keyword, 3)
-                    find_in_browser("1080p")
+
+                    if config != None and (find_value := config["browser"]["find_in_page"]):
+                        find_in_browser(find_value)
 
                     if config != None and config["torrent"]["auto_select"]:
                         magnet_link = save_add_magnet_link()

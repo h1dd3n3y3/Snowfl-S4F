@@ -8,7 +8,8 @@
     "browser": {
         "IMDb_watchlist_export_link": "",
         "default_search_action": 0,
-        "close_tab_after_torrent_add": true
+        "close_tab_after_torrent_add": true,
+        "find_in_page": ""
     },
     "torrent": {
         "auto_select": true,
