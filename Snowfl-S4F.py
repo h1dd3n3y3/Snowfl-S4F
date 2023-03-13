@@ -207,6 +207,7 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
                                 print("No active torrents yet . . .")
                                 print("Listening . . .")
                             else: # Break after timeout
+                                close_bittorrent_on_finish(get_default_bittorrent_client_path())
                                 press_any_key("Timeout reached 30 seconds . . .", "exit")
                                 break
 
