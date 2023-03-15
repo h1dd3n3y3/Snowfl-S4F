@@ -3,7 +3,12 @@ Python application for torrent & subtitle movie browsing, using keystroke inject
 ## <ins>**!! DISCLAIMER !!**</ins>
 - **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions.
 - **_ONLY_** for [<ins>**_supported browsers_**</ins>](https://github.com/h1dd3n3y3/Snowfl-S4F#browser-support).  
-- A <ins>**_Bittorrent client_**</ins> is <ins>**_required_**</ins> _(duh...)_: [**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html) is recommended, as **_more feature-focused_**, but everything else is fine _(€$£)_.
+- A <ins>**_Bittorrent client_**</ins> is <ins>**_required_**</ins> _(duh...)_: <span class="qbt-external-link">[**_qBittorrent_**](https://www.fosshub.com/qBittorrent.html)</span> is recommended, as **_more feature-focused_**, but everything else is fine _(€$£)_.
+<style>
+  .qbt-external-link a {
+    target-name: new;
+  }
+</style>  
 
 ### If this _LAZY WORKAROUND_ works, it provides:  
 - Publicly available torrent browser
@@ -91,13 +96,3 @@ Malfunctions are expected, 30% of the time.
   - <ins>**Delete torrent:**</ins> `delete_torrent` to `true/false`.
   - <ins>**Close qBittorrent window:**</ins> `close_window` to `true/false`.
   - <ins>**Open torrent folder:**</ins> `open_torrent_folder` to `true/false`.
-
-<script>
-window.addEventListener('DOMContentLoaded', function() {
-  var links = document.getElementsByTagName('a');
-  for (var i = 0; i < links.length; i++) {
-    links[i].setAttribute('target', '_blank');
-  }
-});
-</script>
-
