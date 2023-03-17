@@ -1,4 +1,4 @@
-import os, winreg, webbrowser, datetime, time, msvcrt, shutil # Built-in
+import os, winreg, webbrowser, datetime, time, msvcrt, shutil, sys # Built-in
 import win32api, win32gui, win32con      #
 import requests, qbittorrentapi, langid  #
 import csv, json, configparser           # 3rd-party
