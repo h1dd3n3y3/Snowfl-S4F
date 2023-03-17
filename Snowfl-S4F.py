@@ -371,9 +371,8 @@ def watchlist_part1(watchlist_url): # Watchlist backend
     return i # Get total movie number
 
 def watchlist_part2(i): # Watchlist frontend
-    for a in range(i):
-        movieDetails.append(f"{a+1}. {movieList[a]} ({dayMonthList[a]}) -- {ratingList[a]}")
-
+    movieDetails = [(f"{a+1}. {movieList[a]} ({dayMonthList[a]}) -- {ratingList[a]}") for a in range(i)]
+    
     wrap_around_text(i + 5, len(max(movieDetails, key=len)))
     center_win()
 
