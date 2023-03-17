@@ -468,10 +468,9 @@ while 1:
                 find_in_browser(find_value)
 
             if choice == '1': # Movie Search (1 button pressed)
-                if config != None and config["torrent"]["auto_select"]:
+                if config != None and (find_value := config["browser"]["find_in_page"]) and config["torrent"]["auto_select"]:
                     manget_link = save_add_magnet_link()
-                
-                qbittorrent_webui_actions()
+                    qbittorrent_webui_actions()
 
                 exit(0)
             else: # Testing if movie torrnet exists (space button pressed)
@@ -500,10 +499,9 @@ while 1:
                     if config != None and (find_value := config["browser"]["find_in_page"]):
                         find_in_browser(find_value)
 
-                    if config != None and config["torrent"]["auto_select"]:
-                        magnet_link = save_add_magnet_link()
-
-                    qbittorrent_webui_actions()
+                        if config["torrent"]["auto_select"]:
+                            magnet_link = save_add_magnet_link()
+                            qbittorrent_webui_actions()
 
                 exit(0)    
             else: # IMDb search (4 button pressed)
