@@ -9,12 +9,13 @@
         "IMDb_watchlist_export_link": "",
         "default_search_action": 0,
         "close_tab_after_torrent_add": true,
-        "find_in_page": ""
+        "find_in_page": "1080p"
     },
     "torrent": {
         "auto_select": true,
         "auto_launch_client": true,
         "qbittorrent": {
+            "monitor_timeout": 30,
             "on_download": {
                 "delete_torrent": true,
                 "close_window": true,

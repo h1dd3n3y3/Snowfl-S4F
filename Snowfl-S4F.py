@@ -107,26 +107,29 @@ def save_add_magnet_link(): # Save magnet link
         copy_link_to_clip(0.1)
         link = clipboard.paste()
 
-        if not link.startswith("magnet"):
-            if link.endswith("/#fetch"):
-                find_in_browser("next")
-                
-            save_add_magnet_link()
-        else:
-            open_in_browser(link, 0.1)
+        if link != " ":
+            if not link.startswith("magnet"):
+                if link.endswith("/#fetch"):
+                    find_in_browser("next")
+                    
+                save_add_magnet_link()
+            else:
+                open_in_browser(link, 0.1)
 
-            if config != None: # If config exists
-                if config["browser"]["close_tab_after_torrent_add"]:
-                    close_tab(0.1) # Close browser tab
-                if config["torrent"]["auto_launch_client"]:
-                    os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
+                if config != None: # If config exists
+                    if config["browser"]["close_tab_after_torrent_add"]:
+                        close_tab(0.1) # Close browser tab
+                    if config["torrent"]["auto_launch_client"]:
+                        os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
 
 def copy_link_to_clip(delay): # Copy url link to clipboard
     keyboard.press_and_release("shift+f10")
     time.sleep(0.1)
 
-    if browser == "chrome": keyboard.press_and_release("e") # 'Shift + F10' shortcut and then 'E' key
-    elif browser == "firefox": keyboard.press_and_release("l") # 'Shift + F10' shortcut and then 'L' key
+    if browser == "chrome":
+        keyboard.press_and_release("e") # 'Shift + F10' shortcut and then 'E' key
+    elif browser == "firefox":
+        keyboard.press_and_release("l") # 'Shift + F10' shortcut and then 'L' key
     elif browser == "Launcher": # Opera browser
         for i in range(5):
             keyboard.press_and_release("down")
@@ -165,10 +168,17 @@ def get_default_bittorrent_client_path(): # Get default bittorrent client path
         return "Unknown"
 
 def qbittorrent_webui_actions(): # qBittorrent monitoring
-    cnt = 0
     name, ext = os.path.splitext(os.path.basename(get_default_bittorrent_client_path())) # Save bittorrent client name
 
     if name == "qbittorrent":
+        cnt = 0
+
+        if config != None:
+            if not config["torrent"]["qbittorrent"]["monitor_timeout"]:
+                max_cnt = 6 # Default timeout evaluates to 5 (sleep time) * 6 (max_cnt) = 30
+            else:
+                max_cnt = config["torrent"]["qbittorrent"]["monitor_timeout"] // 5 # timeout floor division to multiple of 5 (sleep time)
+        
         qbt_config_file = os.path.join(os.getenv("APPDATA"), "qBittorrent", "qBittorrent.ini") # Locate qbittorrent config file
 
         qbt_config = configparser.ConfigParser()    # 
@@ -176,7 +186,7 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
 
         if qbt_config != None and (web_ui_enabled := qbt_config.getboolean("Preferences", "WebUI\\Enabled")): # Check qbtittorrent config & if WebUI is enabled
             if not (localhost_auth := qbt_config.getboolean("Preferences", "WebUI\\LocalHostAuth")): # Check if localhost authentication bypass is enabled
-                if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in: # Check the login status
+                if (qbt_client := qbittorrentapi.Client(host="localhost", port=qbt_config.getint("Preferences", "WebUI\\Port"))).is_logged_in: # Check login status
                     while 1:
                         torrents = qbt_client.torrents_info() # Get torrents list:
 
@@ -202,17 +212,17 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
                                 break # Request agian for torrent info, taking into consideration only the 1st from the list
                         else:
                             cnt += 1
-                            os.system("cls")
 
-                            if cnt < 6: # Wait for 30 seconds
-                                print("No active torrents yet . . .")
-                                print("Listening . . .")
+                            if cnt < max_cnt: # Wait for 30 seconds
+                                if cnt == 1:
+                                    os.system("cls")
+                                    print("No active torrents yet . . .")
+                                    print("Listening . . .")
+                                time.sleep(5)
                             else: # Break after timeout
-                                close_bittorrent_on_finish(get_default_bittorrent_client_path())
-                                press_any_key("Timeout reached 30 seconds . . .", "exit")
+                                os.system("cls")
+                                press_any_key(f"{max_cnt * 5}-second timeout reached . . .\nNo active torrent found . . .", "exit")
                                 break
-
-                        time.sleep(5)
                 else:
                     os.system("cls")
                     change_win("next")
@@ -220,11 +230,11 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
             else:
                 os.system("cls")
                 change_win("next")
-                press_any_key("localhost authentication bypass is disabled . . .", "exit")
+                press_any_key("Localhost authentication bypass is disabled . . .", "exit")
         else:
             os.system("cls")
             change_win("next")
-            press_any_key("qBittorrent WebUI not enabled . . .", "exit")
+            press_any_key("QBittorrent WebUI not enabled . . .", "exit")
 
 def close_bittorrent_on_finish(bittorrent_client_path): # Close bittorrent client on torrent download finish
     name, ext = os.path.splitext(os.path.basename(bittorrent_client_path))
