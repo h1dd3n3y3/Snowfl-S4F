@@ -101,26 +101,29 @@ def find_in_browser(keyword): # Find in browser shortcut
     time.sleep(0.1)
 
 def save_add_magnet_link(): # Save magnet link
-    if config != None and (find_value := config["browser"]["find_in_page"]):
-        keyboard.press_and_release("tab")
-        time.sleep(0.1)
-        copy_link_to_clip(0.1)
-        link = clipboard.paste()
+    keyboard.press_and_release("tab")
+    time.sleep(0.1)
+    copy_link_to_clip(0.1)
+    link = clipboard.paste()
 
-        if link != " ":
-            if not link.startswith("magnet"):
-                if link.endswith("/#fetch"):
-                    find_in_browser("next")
-                    
-                save_add_magnet_link()
-            else:
-                open_in_browser(link, 0.1)
+    if link != " ":
+        if not link.startswith("magnet"):
+            if link.endswith("/#fetch"):
+                find_in_browser("next")
+                
+            save_add_magnet_link()
+        else:
+            open_in_browser(link, 0.1)
 
-                if config != None: # If config exists
-                    if config["browser"]["close_tab_after_torrent_add"]:
-                        close_tab(0.1) # Close browser tab
-                    if config["torrent"]["auto_launch_client"]:
-                        os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
+            if config != None: # If config exists
+                if config["browser"]["close_tab_after_torrent_add"]:
+                    close_tab(0.1) # Close browser tab
+                if config["torrent"]["auto_launch_client"]:
+                    os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
+    else:
+        change_win()
+        press_any_key("snowfl.com didn't load on time . . .", "retry after snowfl.com has fully loaded")
+        save_add_magnet_link()
 
 def copy_link_to_clip(delay): # Copy url link to clipboard
     keyboard.press_and_release("shift+f10")
@@ -418,10 +421,21 @@ dayMonthList = []
 movieDetails = []
 clipboard.copy(" ") # Clear recently copied text, in case it starts with "http" or "magnet"
 
-if config == None or not config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
-    or not (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
-        while not ping_req("google.com"): # Check internet connection
+while 1:
+    if config != None:
+        if config["browser"]["IMDb_watchlist_export_link"].endswith("/export")\
+        and (tot_mov := watchlist_part1(config["browser"]["IMDb_watchlist_export_link"])):
+            break # IMDb watchlist fetched successfully / Connected to internet
+        else:
+            if not ping_req("google.com"): # Check internet connection
+                press_any_key("No internet connection . . .", "retry")
+            else:
+                break # Connected to internet
+    else:
+        if not ping_req("google.com"): # Check internet connection
             press_any_key("No internet connection . . .", "retry")
+        else:
+            break # Connected to internet
 
 if (bittorr_cli := get_default_bittorrent_client_path()) == "Unknown":
     print("""No Bittorrent client installed . . .
