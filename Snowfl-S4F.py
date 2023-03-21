@@ -223,11 +223,11 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
                                     os.system("cls")
                                     print("No active torrents yet . . .")
                                     print("Listening . . .")
-                                time.sleep(5)
                             else: # Break after timeout
                                 os.system("cls")
                                 press_any_key(f"{max_cnt * 5}-second timeout reached . . .\nNo active torrent found . . .", "exit")
                                 break
+                    time.sleep(5)
                 else:
                     os.system("cls")
                     change_win("next")
