@@ -121,9 +121,10 @@ def save_add_magnet_link(): # Save magnet link
                 if config["torrent"]["auto_launch_client"]:
                     os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
     else:
+        os.system("cls")
         change_win()
         press_any_key("snowfl.com didn't load on time . . .", "retry after snowfl.com has fully loaded")
-        change_win()
+        change_win(0.1)
         save_add_magnet_link()
 
 def copy_link_to_clip(delay): # Copy url link to clipboard
