@@ -1,4 +1,4 @@
-import os, winreg, webbrowser, datetime, time, msvcrt, shutil #
+import os, winreg, re, webbrowser, datetime, time, msvcrt, shutil #
 from sys import exit                                          # Built-in
 import win32api, win32gui, win32con      #
 import requests, qbittorrentapi, langid  #
@@ -106,6 +106,7 @@ def save_add_magnet_link(): # Save magnet link
     copy_link_to_clip(0.1)
     link = clipboard.paste()
 
+    print(f"'{link}' : {type(link)}")
     if link != " ":
         if not link.startswith("magnet"):
             if link.endswith("/#fetch"):
@@ -121,6 +122,7 @@ def save_add_magnet_link(): # Save magnet link
                 if config["torrent"]["auto_launch_client"]:
                     os.system(f'cmd /c "{bittorr_cli}"') # Launch bittorrent client
     else:
+        print("torrent auto-selection fail")
         os.system("cls")
         change_win()
         press_any_key("snowfl.com didn't load on time . . .", "retry after snowfl.com has fully loaded")
@@ -176,6 +178,7 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
     name, ext = os.path.splitext(os.path.basename(get_default_bittorrent_client_path())) # Save bittorrent client name
 
     if name == "qbittorrent":
+        in_once = 1
         cnt = 0
 
         if config != None:
@@ -205,29 +208,38 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
 
                                 if config["torrent"]["qbittorrent"]["on_download"]["open_torrent_folder"]:
                                     torrent_path = t.content_path
+
+                                    if not keyword.split()[0] in torrent_path:
+                                        os.system(f"cd {torrent_path} && mkdir {t.name}")
+                                        torrent_path = "{torrent_path}\{t.name}"
+
                                     os.system(f'explorer.exe "{torrent_path}"') # Open torrent folder
 
                                 return
                             else:
-                                os.system("cls")
-                                print("""Monitoring qBittorrent . . .\n
-                                    \rThis window will stay open until the download is finished.
-                                    \rIf you close it manually, any qbittorrent actions will be ignored.\n
-                                    \rPlease wait patiently . . .""")
+                                if in_once:
+                                    in_once = 0
+                                    os.system("cls")
+                                    print("""Monitoring qBittorrent . . .\n
+                                        \rThis window will stay open until the download is finished.
+                                        \rIf you close it manually, any qbittorrent actions will be ignored.\n
+                                        \rPlease wait patiently . . .""")
+                                
+                                time.sleep(5)
                                 break # Request agian for torrent info, taking into consideration only the 1st from the list
                         else:
                             cnt += 1
 
-                            if cnt < max_cnt: # Wait for 30 seconds
+                            if cnt < max_cnt: # Wait for timeout seconds (30 by default)
                                 if cnt == 1:
                                     os.system("cls")
                                     print("No active torrents yet . . .")
                                     print("Listening . . .")
+                                time.sleep(5)
                             else: # Break after timeout
                                 os.system("cls")
-                                press_any_key(f"{max_cnt * 5}-second timeout reached . . .\nNo active torrent found . . .", "exit")
-                                break
-                    time.sleep(5)
+                                press_any_key(f"{cnt * 5}-second timeout reached . . .\nNo active torrent found . . .", "exit")
+                                exit(0)
                 else:
                     os.system("cls")
                     change_win("next")
@@ -421,7 +433,7 @@ imdbLinkList = []
 ratingList = []
 dayMonthList = []
 movieDetails = []
-clipboard.copy(" ") # Clear recently copied text, in case it starts with "http" or "magnet"
+clipboard.copy(" ") # Generate a blank clipboard copied text
 
 while 1:
     if config != None:
@@ -488,19 +500,19 @@ while 1:
 
     while 1:
         if choice in ['1', ' ']:
-            open_in_browser("https://snowfl.com", 4)
+            open_in_browser("https://snowfl.com", 5)
             type_sortBySeed_go(keyword, 3)
 
-            if config != None and (find_value := config["browser"]["find_in_page"]):
-                find_in_browser(find_value)
+            if config != None and (value := config["browser"]["find_in_page"]):
+                find_in_browser(value)
 
             if choice == '1': # Movie Search (1 button pressed)
-                if config != None and (find_value := config["browser"]["find_in_page"]) and config["torrent"]["auto_select"]:
+                if config != None and (value := config["browser"]["find_in_page"]) and config["torrent"]["auto_select"]:
                     manget_link = save_add_magnet_link()
                     qbittorrent_webui_actions()
 
                 exit(0)
-            else: # Testing if movie torrnet exists (space button pressed)
+            else: # Check if movie torrnet exists (space button pressed)
                 os.system("cls")
                 change_win(0.1)
                 temp = keyword
@@ -523,8 +535,8 @@ while 1:
                     
                     type_sortBySeed_go(keyword, 3)
 
-                    if config != None and (find_value := config["browser"]["find_in_page"]):
-                        find_in_browser(find_value)
+                    if config != None and (value := config["browser"]["find_in_page"]):
+                        find_in_browser(value)
 
                         if config["torrent"]["auto_select"]:
                             magnet_link = save_add_magnet_link()
