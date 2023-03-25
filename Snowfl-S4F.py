@@ -1,4 +1,4 @@
-import os, winreg, re, webbrowser, datetime, time, msvcrt, shutil #
+import os, winreg, webbrowser, datetime, time, msvcrt, shutil #
 from sys import exit                                          # Built-in
 import win32api, win32gui, win32con      #
 import requests, qbittorrentapi, langid  #
