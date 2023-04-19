@@ -27,10 +27,9 @@ def center_win():
 
         # Calculate the position to center the window on the screen, excluding the taskbar
         pos_x = work_area_rect[0] + (work_area_width - window_width) // 2
-        pos_y = work_area_rect[1] + (work_area_height - window_height) // 2\
-            - config["ui"]["window"]["bottom_offset"] # Adjust further bottom offset
+        pos_y = work_area_rect[1] + (work_area_height - window_height) // 2
 
-        # Move the window to the center of the screen (or relative, depending on the offset), excluding the taskbar
+        # Move the window to the center of the screen, excluding the taskbar
         win32gui.MoveWindow(console_handle, pos_x, pos_y, window_width, window_height, True)
 
 def wrap_around_text(rows, cols): # Wrap window around text

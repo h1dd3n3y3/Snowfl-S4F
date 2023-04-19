@@ -1,8 +1,7 @@
 {
     "ui": {
         "window": {
-            "centered": true,
-            "bottom_offset": 0
+            "centered": true
         }
     },
     "browser": {
