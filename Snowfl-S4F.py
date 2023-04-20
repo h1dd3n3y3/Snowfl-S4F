@@ -178,7 +178,6 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
 
     if name == "qbittorrent":
         in_once = 1
-        cnt = 0
 
         if config != None:
             if not config["torrent"]["qbittorrent"]["monitor_timeout"]:
@@ -216,8 +215,11 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
 
                                 return
                             else:
-                                if in_once:
+                                if in_once or intr:
+                                    intr = 0
                                     in_once = 0
+                                    cnt = 0
+
                                     os.system("cls")
                                     print("""Monitoring qBittorrent . . .\n
                                         \rThis window will stay open until the download is finished.
@@ -229,8 +231,10 @@ def qbittorrent_webui_actions(): # qBittorrent monitoring
                         else:
                             cnt += 1
 
-                            if cnt < max_cnt: # Wait for timeout seconds (30 by default)
+                            if cnt < max_cnt: # Timeout not yet reached (30 sec by default)
                                 if cnt == 1:
+                                    intr = 1 # Iterruption happened
+
                                     os.system("cls")
                                     print("No active torrents yet . . .")
                                     print("Listening . . .")
