@@ -126,6 +126,7 @@ def save_add_magnet_link(): # Save magnet link
         change_win()
         press_any_key("snowfl.com didn't load on time . . .", "retry after snowfl.com has fully loaded")
         change_win(0.1)
+        find_in_browser("next")
         save_add_magnet_link()
 
 def copy_link_to_clip(delay): # Copy url link to clipboard
