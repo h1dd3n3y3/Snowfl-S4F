@@ -1,5 +1,4 @@
-# Snowfl-S4F
-Python application for torrent & subtitle movie browsing, using keystroke injection.  
+# Snowfl-S4F  
 ## <ins>**!! DISCLAIMER !!**</ins>
 - **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions.
 - **_ONLY_** for [<ins>**_supported browsers_**</ins>](https://github.com/h1dd3n3y3/Snowfl-S4F#browser-support).  
