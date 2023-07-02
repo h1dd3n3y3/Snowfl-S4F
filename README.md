@@ -1,4 +1,4 @@
-# Snowfl-S4F  
+# Snowfl_S4F-lazy-movie-browser   
 ## <ins>**!! DISCLAIMER !!**</ins>
 - **_ONLY_** for <ins>**_WINDOWS 10+_**</ins> versions.
 - **_ONLY_** for [<ins>**_supported browsers_**</ins>](https://github.com/h1dd3n3y3/Snowfl-S4F#browser-support).  
