@@ -378,17 +378,19 @@ def watchlist_part1(watchlist_url): # Watchlist backend
             
             movieTitle = row[5]
             
-            if not check_eng_title(movieTitle): # Check if title is english
-                if in_once:
-                    os.system("cls")
-                    print("Translating non-english titles . . .")
-                    in_once = 0
+            #Translate non-english titles takes too long, so leave it for now
+            #
+            # if not check_eng_title(movieTitle): # Check if title is english
+            #     if in_once:
+            #         os.system("cls")
+            #         print("Translating non-english titles . . .")
+            #         in_once = 0
                 
-                movieTitle = get_eng_title(row[1]) # Convert title to english
-                if movieTitle.lower() != row[5].lower():
-                    print(f'"{row[5]}" --> "{movieTitle}"')
-                else:
-                    movieTitle = row[5]
+            #     movieTitle = get_eng_title(row[1]) # Convert title to english
+            #     if movieTitle.lower() != row[5].lower():
+            #         print(f'"{row[5]}" --> "{movieTitle}"')
+            #     else:
+            #         movieTitle = row[5]
             
             movieList.append(f"{movieTitle} {row[-5]}") # Save movie & year
             imdbLinkList.append(f"https://www.imdb.com/title/{row[1]}") # Save IMDb movie link
