@@ -5,6 +5,6 @@
 !.gitignore
 !README.md
 !requirements.txt
-!Snowfl_S4F.py
+!Snowfl-S4F.py
 !config.json
 !movies.ico
